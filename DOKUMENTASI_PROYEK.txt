@@ -1,0 +1,1261 @@
+================================================================================
+          DOKUMENTASI PROYEK - SISTEM MANAJEMEN KONTEN (CMS) BASO YEN
+================================================================================
+Nama Proyek   : Baso Yen - Content Management System (CMS) & Landing Page
+Versi         : 1.0.0
+Tanggal       : Mei 2026
+Penulis       : Riyan
+================================================================================
+
+
+================================================================================
+DAFTAR ISI
+================================================================================
+  1.  Gambaran Umum Proyek
+  2.  Teknologi yang Digunakan (Tech Stack)
+  3.  Struktur Folder Proyek
+  4.  Cara Menjalankan Proyek (Setup & Installation)
+  5.  Variabel Lingkungan (.env)
+  6.  Arsitektur & Alur Kerja Backend
+  7.  Dokumentasi Database (Prisma Schema)
+  8.  Dokumentasi API Lengkap (Endpoint Reference)
+  9.  Arsitektur & Alur Kerja Frontend
+  10. Halaman Landing Page (Pengunjung)
+  11. Halaman Dasbor Admin (CMS)
+  12. Sistem Keamanan Aplikasi
+  13. Layanan Eksternal yang Digunakan
+  14. Catatan Penting untuk Pemeliharaan
+
+
+================================================================================
+BAB 1. GAMBARAN UMUM PROYEK
+================================================================================
+
+Proyek ini adalah sebuah aplikasi web fullstack yang terdiri dari dua bagian:
+
+  a) LANDING PAGE (Halaman Depan)
+     Halaman website resmi Baso Yen yang bisa dilihat oleh semua pengunjung.
+     Menampilkan informasi produk, artikel, resep, profil perusahaan, galeri,
+     sertifikat mutu, formulir kontak, dan form permintaan sampel (B2B).
+
+  b) CONTENT MANAGEMENT SYSTEM / CMS (Dasbor Admin)
+     Panel kontrol khusus untuk Admin Baso Yen. Digunakan untuk mengelola
+     seluruh konten yang tampil di Landing Page, termasuk produk, artikel,
+     resep, galeri foto, testimoni, sertifikat, mitra/klien, dan pesan
+     masuk dari pengunjung.
+
+Proyek ini dibangun sebagai Proyek Akhir dengan tujuan untuk memodernisasi
+manajemen konten website Baso Yen secara digital dan efisien.
+
+
+================================================================================
+BAB 2. TEKNOLOGI YANG DIGUNAKAN (TECH STACK)
+================================================================================
+
+  ---- BACKEND ----
+  Framework      : Express.js v5.2.1 (Node.js)
+  Bahasa         : JavaScript (ES Modules / .mjs)
+  Database       : PostgreSQL
+  ORM            : Prisma v7.8.0 (dengan adapter pg)
+  Autentikasi    : JWT (JSON Web Token) + HttpOnly Cookie
+  Upload Gambar  : Multer (buffer) + Sharp (optimasi) + Cloudflare R2 (penyimpanan)
+  Validasi Input : Zod v4.4.3
+  Keamanan       : Helmet, CORS, express-rate-limit
+  Email          : Nodemailer (via Gmail SMTP)
+  Enkripsi       : Bcrypt v6.0.0
+  Dev Tools      : Nodemon v3.1.14
+
+  ---- FRONTEND ----
+  Framework      : React v19.2.6
+  Build Tool     : Vite v8.0.12
+  Bahasa         : JavaScript (JSX)
+  Routing        : React Router DOM v7.15.1
+  State Global   : Zustand v5.0.13
+  State Server   : TanStack React Query v5
+  HTTP Client    : Axios v1.16.1
+  Styling        : TailwindCSS v4.3.0
+  Animasi        : Framer Motion v12.39.0
+  Editor Teks    : React Quill New v3.8.3
+  Ikon           : Lucide React v1.16.0
+  Utilitas       : clsx, tailwind-merge
+
+
+================================================================================
+BAB 3. STRUKTUR FOLDER PROYEK
+================================================================================
+
+basoyen/
+├── backend/                    <- Folder server Node.js
+│   ├── prisma/
+│   │   └── schema.prisma       <- Definisi struktur database
+│   ├── src/
+│   │   ├── server.mjs          <- Entry point server, konfigurasi Express
+│   │   ├── controllers/        <- Menangani HTTP Request & Response
+│   │   ├── services/           <- Logika bisnis & query ke database
+│   │   ├── routes/             <- Definisi jalur URL API
+│   │   ├── middlewares/        <- Middleware autentikasi, error, upload
+│   │   ├── validations/        <- Skema validasi input (Zod)
+│   │   ├── utils/              <- Fungsi pembantu (JWT, email, Cloudflare R2)
+│   │   └── lib/
+│   │       └── prisma.mjs      <- Instansiasi Prisma Client
+│   └── .env                    <- Variabel lingkungan rahasia backend
+│
+└── frontend/                   <- Folder aplikasi React
+    ├── public/                 <- Aset statis (logo, gambar lokal)
+    ├── src/
+    │   ├── App.jsx             <- Router utama aplikasi
+    │   ├── main.jsx            <- Entry point React
+    │   ├── index.css           <- Gaya global & konfigurasi Tailwind
+    │   ├── lib/
+    │   │   └── axios.js        <- Konfigurasi Axios & interceptor keamanan
+    │   ├── store/
+    │   │   └── authStore.js    <- State sesi login global (Zustand)
+    │   ├── hooks/
+    │   │   └── api/            <- Mesin data React Query (useProducts, dsb)
+    │   ├── layouts/
+    │   │   ├── LandingLayout.jsx  <- Tata letak halaman pengunjung (navbar+footer)
+    │   │   └── DashboardLayout.jsx <- Tata letak halaman dasbor (sidebar+header)
+    │   ├── pages/
+    │   │   ├── landing/        <- Halaman-halaman untuk pengunjung
+    │   │   └── dashboard/      <- Halaman-halaman untuk admin
+    │   └── components/         <- Komponen UI yang bisa dipakai ulang
+    └── vite.config.js          <- Konfigurasi Vite
+
+
+================================================================================
+BAB 4. CARA MENJALANKAN PROYEK (SETUP & INSTALLATION)
+================================================================================
+
+  PRASYARAT:
+  ----------
+  - Node.js versi 18 atau lebih baru (disarankan v20+)
+  - npm (sudah termasuk bersama Node.js)
+  - PostgreSQL yang sudah berjalan di komputer
+  - Akun Cloudflare R2 (gratis) untuk penyimpanan gambar
+  - Akun Gmail dengan App Password untuk notifikasi email
+
+  LANGKAH 1: SIAPKAN DATABASE
+  ----------------------------
+  Buat database baru di PostgreSQL dengan nama "basoyencms_db":
+
+    $ psql -U postgres
+    postgres=# CREATE DATABASE basoyencms_db;
+    postgres=# CREATE USER basoyen_app WITH PASSWORD 'password_anda';
+    postgres=# GRANT ALL PRIVILEGES ON DATABASE basoyencms_db TO basoyen_app;
+    postgres=# \q
+
+  LANGKAH 2: KONFIGURASI BACKEND
+  --------------------------------
+  Masuk ke folder backend
+    $ cd backend
+   
+  Buat .env dan konfigurasi (template nya ada di .env.example)
+   Lihat BAB 5
+
+  Install semua dependensi backend:
+    $ npm install
+
+  Jalankan database database push dan generate (membuat semua tabel):
+    $ npx prisma db push
+    $ npx prisma generate
+
+  (Opsional) Jalankan seeder untuk membuat akun Admin pertama:
+    $ npx prisma db seed
+
+  LANGKAH 3: KONFIGURASI FRONTEND
+  ---------------------------------
+  Buka terminal baru, masuk ke folder frontend:
+
+    $ cd frontend
+    $ npm install
+
+  buat .env (template nya ada di .env.example) 
+  lihat BAB 5
+
+  LANGKAH 4: MENJALANKAN APLIKASI
+  ---------------------------------
+  Jalankan Backend (di terminal 1, dari folder backend/):
+    $ npm run dev
+    -> Server akan berjalan di: http://localhost:5000
+
+  Jalankan Frontend (di terminal 2, dari folder frontend/):
+    $ npm run dev
+    -> Aplikasi akan terbuka di: http://localhost:5173
+
+  AKSES APLIKASI:
+  ---------------
+  - Landing Page  : http://localhost:5173
+  - Login Admin   : http://localhost:5173/admin/login
+  - Dasbor Admin  : http://localhost:5173/admin
+
+
+================================================================================
+BAB 5. VARIABEL LINGKUNGAN (.env)
+================================================================================
+
+  ---- backend/.env ----
+  File .env harus dibuat di dalam folder backend/ dengan isi sebagai berikut:
+  (template nya ada di .env.example)
+
+  # URL koneksi ke database PostgreSQL
+  # Format: postgresql://USERNAME:PASSWORD@HOST:PORT/NAMA_DATABASE
+  DATABASE_URL=postgresql://basoyen_app:password_anda@localhost:5432/basoyencms_db
+
+  # Port tempat server Express berjalan
+  PORT=5000
+
+  # Kunci rahasia untuk menandatangani & memverifikasi JWT (gunakan string acak panjang)
+  JWT_SECRET=masukkan_kunci_rahasia_panjang_di_sini
+
+  # Kredensial Cloudflare R2 (untuk penyimpanan gambar di cloud)
+  R2_BUCKET_NAME=basoyen
+  R2_PUBLIC_URL=https://assets.domainanda.com
+  R2_ENDPOINT=https://<ACCOUNT_ID>.r2.cloudflarestorage.com
+  R2_ACCESS_KEY_ID=kunci_akses_anda
+  R2_SECRET_ACCESS_KEY=kunci_rahasia_anda
+
+  # Password Aplikasi Gmail (untuk fitur notifikasi email)
+  # Buat di: myaccount.google.com -> Security -> App Passwords
+  GMAIL_PASS=xxxx_xxxx_xxxx_xxxx
+
+
+  ---- frontennd/.env ----
+  File .env harus dibuat di dalam folder frontend/ dengan isi sebagai berikut:
+  (template nya ada di .env.example)
+
+  # untuk menyambung ke url API
+  VITE_API_URL=http://localhost:5000/api
+
+
+  PENTING:
+  - Jangan pernah meng-upload file .env ke Git/GitHub!
+  - File .env sudah terdaftar di .gitignore secara otomatis jika belum tinggal tambahkan
+  - Ganti semua nilai contoh di atas dengan nilai asli milik Anda.
+
+
+================================================================================
+BAB 6. ARSITEKTUR & ALUR KERJA BACKEND
+================================================================================
+
+  Backend dibangun menggunakan pola arsitektur berlapis (Layered Architecture):
+
+  REQUEST dari Browser/Frontend
+       |
+       v
+  [ROUTE]         -> Menentukan endpoint mana yang dipanggil (URL + Method)
+       |
+       v
+  [MIDDLEWARE]    -> Penjaga gerbang: cek autentikasi (protect), validasi upload
+       |
+       v
+  [CONTROLLER]    -> Menerima request, memanggil service, mengirimkan response
+       |
+       v
+  [SERVICE]       -> Logika bisnis utama: query database via Prisma, proses data
+       |
+       v
+  [PRISMA ORM]    -> Terjemahkan kode JavaScript menjadi query SQL ke PostgreSQL
+       |
+       v
+  [DATABASE]      -> PostgreSQL menyimpan dan mengembalikan data
+
+  PENJELASAN MASING-MASING LAPISAN:
+  ----------------------------------
+
+  ROUTES (src/routes/)
+  Bertugas mendaftarkan "alamat" API dan metode HTTP yang diterima.
+  Contoh: router.get('/products', ...) berarti GET /api/products
+  Setiap resource punya file route sendiri.
+
+  CONTROLLERS (src/controllers/)
+  Menjadi jembatan antara request HTTP dan logika bisnis.
+  Tidak melakukan query database secara langsung.
+  Tugas utama: ambil data dari req.body/req.params, panggil service,
+  kirim response lewat sendSuccess() atau biarkan error ditangkap next(error).
+
+  SERVICES (src/services/)
+  Tempat semua logika bisnis dan query database (Prisma).
+  Melakukan validasi Zod, pengecekan data duplikat, penghapusan gambar lama
+  di Cloudflare R2 sebelum mengunggah gambar baru, dan sebagainya.
+
+  MIDDLEWARES (src/middlewares/)
+  - authMiddleware.mjs : Memverifikasi token JWT dari cookie browser
+  - uploadMiddleware.mjs: Memproses file gambar dengan Multer (max 5MB)
+  - errorMiddleware.mjs : Menangkap semua error dan mengirimkan respons JSON
+
+  UTILS (src/utils/)
+  - jwt.mjs        : Membuat dan memverifikasi token JWT
+  - cloudflareR2.mjs : Konfigurasi koneksi ke layanan Cloudflare R2
+  - mailer.mjs     : Fungsi untuk mengirim email notifikasi via Gmail
+  - response.mjs   : Fungsi sendSuccess() dan sendError() untuk format JSON
+
+  VALIDATIONS (src/validations/)
+  Setiap resource punya file skema validasi Zod masing-masing.
+  Validasi dijalankan di dalam Service sebelum data disimpan ke database.
+  Jika input tidak valid, Zod otomatis melempar error yang ditangkap middleware.
+
+
+================================================================================
+BAB 7. DOKUMENTASI DATABASE (PRISMA SCHEMA)
+================================================================================
+
+  Database menggunakan PostgreSQL. Semua model didefinisikan di:
+  backend/prisma/schema.prisma
+
+  ---- TABEL-TABEL DATABASE ----
+
+  1. User (Pengguna / Admin)
+     +-----------------+----------+---------------------------------------+
+     | Kolom           | Tipe     | Keterangan                            |
+     +-----------------+----------+---------------------------------------+
+     | id              | String   | ID unik (UUID), Primary Key           |
+     | username        | String   | Username unik untuk login             |
+     | name            | String   | Nama lengkap admin                    |
+     | email           | String   | Email unik                            |
+     | password        | String   | Password terenkripsi (bcrypt)         |
+     | role            | Role     | Role: ADMIN (default)                 |
+     | createdAt       | DateTime | Waktu akun dibuat                     |
+     | updatedAt       | DateTime | Waktu terakhir diperbarui             |
+     +-----------------+----------+---------------------------------------+
+     Relasi: Memiliki banyak Article, Recipe, dan Product
+
+  2. Category (Kategori)
+     +-----------------+----------+---------------------------------------+
+     | Kolom           | Tipe     | Keterangan                            |
+     +-----------------+----------+---------------------------------------+
+     | id              | String   | ID unik (UUID), Primary Key           |
+     | name            | String   | Nama kategori                         |
+     | slug            | String   | Slug unik (URL-friendly)              |
+     | type            | Enum     | PRODUCT, RECIPE, atau ARTICLE         |
+     | createdAt       | DateTime | Waktu dibuat                          |
+     | updatedAt       | DateTime | Waktu diperbarui                      |
+     +-----------------+----------+---------------------------------------+
+     Relasi: Dimiliki oleh banyak Product, Recipe, dan Article
+
+  3. Product (Produk)
+     +-----------------+----------+---------------------------------------+
+     | Kolom           | Tipe     | Keterangan                            |
+     +-----------------+----------+---------------------------------------+
+     | id              | String   | ID unik (UUID), Primary Key           |
+     | name            | String   | Nama produk                           |
+     | slug            | String   | Slug unik (URL-friendly)              |
+     | description     | Text     | Deskripsi panjang produk              |
+     | packSize        | String   | Ukuran/kemasan (contoh: "500g")       |
+     | image           | String   | URL gambar produk (dari Cloudflare R2)   |
+     | badge           | String?  | Label opsional (contoh: "Best Seller")|
+     | categoryId      | String   | Foreign Key ke Category               |
+     | createdById     | String   | Foreign Key ke User (admin pembuat)   |
+     | createdAt       | DateTime | Waktu dibuat                          |
+     | updatedAt       | DateTime | Waktu diperbarui                      |
+     +-----------------+----------+---------------------------------------+
+
+  4. Recipe (Resep)
+     +-----------------+----------+---------------------------------------+
+     | Kolom           | Tipe     | Keterangan                            |
+     +-----------------+----------+---------------------------------------+
+     | id              | String   | ID unik (UUID), Primary Key           |
+     | title           | String   | Judul resep                           |
+     | slug            | String   | Slug unik                             |
+     | time            | String   | Estimasi waktu (contoh: "30 Menit")   |
+     | difficulty      | String   | Tingkat kesulitan (Mudah/Sedang/Sulit)|
+     | image           | String   | URL gambar resep (dari Cloudflare R2)    |
+     | description     | Text     | Deskripsi singkat                     |
+     | content         | Text     | Isi resep lengkap (format HTML/Rich)  |
+     | categoryId      | String   | Foreign Key ke Category               |
+     | authorId        | String   | Foreign Key ke User (admin penulis)   |
+     | createdAt       | DateTime | Waktu dibuat                          |
+     | updatedAt       | DateTime | Waktu diperbarui                      |
+     +-----------------+----------+---------------------------------------+
+
+  5. Article (Artikel)
+     +-----------------+----------+---------------------------------------+
+     | Kolom           | Tipe     | Keterangan                            |
+     +-----------------+----------+---------------------------------------+
+     | id              | String   | ID unik (UUID), Primary Key           |
+     | title           | String   | Judul artikel                         |
+     | slug            | String   | Slug unik                             |
+     | image           | String   | URL gambar thumbnail artikel          |
+     | excerpt         | Text     | Ringkasan singkat artikel             |
+     | content         | Text     | Isi artikel lengkap (format HTML/Rich)|
+     | categoryId      | String   | Foreign Key ke Category               |
+     | authorId        | String   | Foreign Key ke User (admin penulis)   |
+     | createdAt       | DateTime | Waktu dibuat                          |
+     | updatedAt       | DateTime | Waktu diperbarui                      |
+     +-----------------+----------+---------------------------------------+
+
+  6. Gallery (Galeri Foto)
+     +-----------------+----------+---------------------------------------+
+     | Kolom           | Tipe     | Keterangan                            |
+     +-----------------+----------+---------------------------------------+
+     | id              | String   | ID unik (UUID), Primary Key           |
+     | title           | String   | Judul/keterangan foto                 |
+     | description     | String?  | Deskripsi opsional                    |
+     | image           | String   | URL gambar (dari Cloudflare R2)          |
+     | type            | Enum     | FASILITAS_TENTANG_KAMI atau           |
+     |                 |          | BERANDA_POLAROID                      |
+     | order           | Int      | Urutan tampilan (default: 0)          |
+     | createdAt       | DateTime | Waktu dibuat                          |
+     | updatedAt       | DateTime | Waktu diperbarui                      |
+     +-----------------+----------+---------------------------------------+
+     CATATAN TIPE GALERI:
+     - FASILITAS_TENTANG_KAMI : Ditampilkan di halaman "Tentang Kami"
+                                sebagai carousel foto fasilitas perusahaan.
+     - BERANDA_POLAROID       : Ditampilkan di halaman "Beranda" dalam
+                                tampilan bingkai foto polaroid.
+
+  7. Client (Mitra/Klien)
+     +-----------------+----------+---------------------------------------+
+     | Kolom           | Tipe     | Keterangan                            |
+     +-----------------+----------+---------------------------------------+
+     | id              | String   | ID unik (UUID), Primary Key           |
+     | name            | String   | Nama mitra/klien                      |
+     | image           | String   | URL logo mitra (dari Cloudflare R2)      |
+     | createdAt       | DateTime | Waktu dibuat                          |
+     | updatedAt       | DateTime | Waktu diperbarui                      |
+     +-----------------+----------+---------------------------------------+
+
+  8. Certificate (Sertifikat Mutu)
+     +-------------------+----------+-------------------------------------+
+     | Kolom             | Tipe     | Keterangan                          |
+     +-------------------+----------+-------------------------------------+
+     | id                | String   | ID unik (UUID), Primary Key         |
+     | name              | String   | Nama sertifikat (contoh: "BPOM")    |
+     | authority         | String   | Lembaga penerbit sertifikat         |
+     | scope             | String   | Ruang lingkup sertifikasi           |
+     | registrationNumber| String   | Nomor registrasi resmi              |
+     | image             | String?  | URL gambar sertifikat (opsional)    |
+     | link              | String?  | URL tautan ke sertifikat (opsional) |
+     | createdAt         | DateTime | Waktu dibuat                        |
+     | updatedAt         | DateTime | Waktu diperbarui                    |
+     +-------------------+----------+-------------------------------------+
+
+  9. Testimonial (Ulasan/Testimoni)
+     +-----------------+----------+---------------------------------------+
+     | Kolom           | Tipe     | Keterangan                            |
+     +-----------------+----------+---------------------------------------+
+     | id              | String   | ID unik (UUID), Primary Key           |
+     | name            | String   | Nama pemberi testimoni                |
+     | role            | String   | Jabatan/pekerjaan (contoh: "Chef")    |
+     | content         | Text     | Isi testimoni                         |
+     | rating          | Int      | Rating bintang 1-5 (default: 5)       |
+     | tag             | String?  | Label opsional (contoh: "Pelanggan")  |
+     | avatar          | String?  | URL foto profil (opsional, Cloudflare R2)|
+     | createdAt       | DateTime | Waktu dibuat                          |
+     | updatedAt       | DateTime | Waktu diperbarui                      |
+     +-----------------+----------+---------------------------------------+
+
+  10. Setting (Pengaturan Aplikasi)
+     +-----------------+----------+---------------------------------------+
+     | Kolom           | Tipe     | Keterangan                            |
+     +-----------------+----------+---------------------------------------+
+     | id              | String   | ID unik (UUID), Primary Key           |
+     | key             | String   | Kunci unik pengaturan                 |
+     | value           | Text     | Nilai pengaturan                      |
+     | createdAt       | DateTime | Waktu dibuat                          |
+     | updatedAt       | DateTime | Waktu diperbarui                      |
+     +-----------------+----------+---------------------------------------+
+
+  11. ServiceMessage (Pesan Kontak dari Pengunjung)
+     +-----------------+----------+---------------------------------------+
+     | Kolom           | Tipe     | Keterangan                            |
+     +-----------------+----------+---------------------------------------+
+     | id              | String   | ID unik (UUID), Primary Key           |
+     | name            | String   | Nama pengirim                         |
+     | email           | String   | Email pengirim                        |
+     | phone           | String   | Nomor telepon pengirim                |
+     | content         | Text     | Isi pesan                             |
+     | status          | Enum     | UNREAD, READ, atau REPLIED            |
+     | createdAt       | DateTime | Waktu pesan dikirim                   |
+     | updatedAt       | DateTime | Waktu terakhir diperbarui             |
+     +-----------------+----------+---------------------------------------+
+
+  12. SampleRequestMessage (Permintaan Sampel Produk B2B)
+     +-----------------+----------+---------------------------------------+
+     | Kolom           | Tipe     | Keterangan                            |
+     +-----------------+----------+---------------------------------------+
+     | id              | String   | ID unik (UUID), Primary Key           |
+     | name            | String   | Nama pemilik/perwakilan usaha         |
+     | businessName    | String   | Nama usaha kuliner                    |
+     | city            | String   | Kota usaha                            |
+     | phone           | String   | Nomor WhatsApp                        |
+     | email           | String   | Email usaha                           |
+     | status          | Enum     | PENDING, REVIEWED, SENT, REJECTED     |
+     | createdAt       | DateTime | Waktu pengajuan                       |
+     | updatedAt       | DateTime | Waktu terakhir diperbarui             |
+     +-----------------+----------+---------------------------------------+
+
+  ENUM (Tipe Data Pilihan):
+  -------------------------
+  - Role            : ADMIN
+  - CategoryType    : PRODUCT | RECIPE | ARTICLE
+  - MessageStatus   : UNREAD | READ | REPLIED
+  - SampleStatus    : PENDING | REVIEWED | SENT | REJECTED
+  - GalleryType     : FASILITAS_TENTANG_KAMI | BERANDA_POLAROID
+
+
+================================================================================
+BAB 8. DOKUMENTASI API LENGKAP (ENDPOINT REFERENCE)
+================================================================================
+
+  Base URL   : http://localhost:5000/api
+  Format     : Semua respons menggunakan format JSON
+
+  Keterangan Akses:
+  [PUBLIK]   = Bisa diakses oleh siapa saja tanpa login
+  [ADMIN]    = Hanya bisa diakses setelah login (membutuhkan cookie JWT)
+
+  Format Respons Sukses:
+  {
+    "success": true,
+    "message": "Pesan berhasil",
+    "data": { ... }
+  }
+
+  Format Respons Error:
+  {
+    "success": false,
+    "message": "Pesan error",
+    "errors": { ... } (opsional, berisi detail validasi)
+  }
+
+  ============================================================
+  A. AUTENTIKASI (/api/auth)
+  ============================================================
+
+  POST /api/auth/login                                [PUBLIK]
+  Deskripsi : Login sebagai Admin
+  Body      : { "email": "...", "password": "..." }
+  Respons   : Data user + set cookie HttpOnly "token"
+  -------------------------------------------------------------
+
+  GET  /api/auth/me                                   [ADMIN]
+  Deskripsi : Mengambil data profil admin yang sedang login
+  Respons   : { id, name, email, role }
+  -------------------------------------------------------------
+
+  POST /api/auth/logout                               [ADMIN]
+  Deskripsi : Logout (menghapus cookie token)
+  Respons   : Pesan sukses
+  -------------------------------------------------------------
+
+  ============================================================
+  B. KATEGORI (/api/categories)
+  ============================================================
+
+  GET  /api/categories                                [PUBLIK]
+  Deskripsi : Mengambil semua kategori
+  Query     : ?type=PRODUCT atau ?type=RECIPE atau ?type=ARTICLE
+  Respons   : Array data kategori
+  -------------------------------------------------------------
+
+  GET  /api/categories/:id                            [PUBLIK]
+  Deskripsi : Mengambil 1 kategori berdasarkan ID
+  Respons   : Object data kategori
+  -------------------------------------------------------------
+
+  POST /api/categories                                [ADMIN]
+  Deskripsi : Membuat kategori baru
+  Body      : { "name": "...", "type": "PRODUCT" }
+  Respons   : Data kategori yang baru dibuat
+  -------------------------------------------------------------
+
+  PUT  /api/categories/:id                            [ADMIN]
+  Deskripsi : Memperbarui data kategori
+  Body      : { "name": "...", "type": "..." }
+  Respons   : Data kategori yang diperbarui
+  -------------------------------------------------------------
+
+  DELETE /api/categories/:id                          [ADMIN]
+  Deskripsi : Menghapus kategori
+  Respons   : Pesan sukses
+  -------------------------------------------------------------
+
+  ============================================================
+  C. PRODUK (/api/products)
+  ============================================================
+
+  GET  /api/products                                  [PUBLIK]
+  Deskripsi : Mengambil semua produk (dengan data kategori)
+  Respons   : Array data produk
+  -------------------------------------------------------------
+
+  GET  /api/products/:id                              [PUBLIK]
+  Deskripsi : Mengambil 1 produk berdasarkan ID atau slug
+  Respons   : Object data produk lengkap
+  -------------------------------------------------------------
+
+  POST /api/products                                  [ADMIN]
+  Deskripsi : Membuat produk baru (dengan upload gambar)
+  Format    : multipart/form-data
+  Field     : name, description, packSize, categoryId, badge (opsional)
+  File      : image (maks 5MB, format JPG/PNG/WEBP)
+  Respons   : Data produk yang baru dibuat
+  -------------------------------------------------------------
+
+  PUT  /api/products/:id                              [ADMIN]
+  Deskripsi : Memperbarui data produk (gambar opsional)
+  Format    : multipart/form-data
+  Field     : Sama seperti POST (semua opsional)
+  File      : image (opsional, jika dikirim akan mengganti gambar lama)
+  Respons   : Data produk yang diperbarui
+  -------------------------------------------------------------
+
+  DELETE /api/products/:id                            [ADMIN]
+  Deskripsi : Menghapus produk (gambar di Cloudflare R2 ikut terhapus)
+  Respons   : Pesan sukses
+  -------------------------------------------------------------
+
+  ============================================================
+  D. RESEP (/api/recipes)
+  ============================================================
+
+  GET  /api/recipes                                   [PUBLIK]
+  Deskripsi : Mengambil semua resep
+  Respons   : Array data resep (dengan kategori dan penulis)
+  -------------------------------------------------------------
+
+  GET  /api/recipes/:id                               [PUBLIK]
+  Deskripsi : Mengambil 1 resep berdasarkan ID atau slug
+  Respons   : Object data resep lengkap
+  -------------------------------------------------------------
+
+  POST /api/recipes                                   [ADMIN]
+  Deskripsi : Membuat resep baru
+  Format    : multipart/form-data
+  Field     : title, time, difficulty, description, content, categoryId
+  File      : image (maks 5MB)
+  Respons   : Data resep yang baru dibuat
+  -------------------------------------------------------------
+
+  PUT  /api/recipes/:id                               [ADMIN]
+  Deskripsi : Memperbarui data resep
+  Format    : multipart/form-data
+  Respons   : Data resep yang diperbarui
+  -------------------------------------------------------------
+
+  DELETE /api/recipes/:id                             [ADMIN]
+  Deskripsi : Menghapus resep beserta gambarnya
+  Respons   : Pesan sukses
+  -------------------------------------------------------------
+
+  ============================================================
+  E. ARTIKEL (/api/articles)
+  ============================================================
+
+  GET  /api/articles                                  [PUBLIK]
+  Deskripsi : Mengambil semua artikel
+  Respons   : Array data artikel (dengan kategori dan penulis)
+  -------------------------------------------------------------
+
+  GET  /api/articles/:id                              [PUBLIK]
+  Deskripsi : Mengambil 1 artikel berdasarkan ID atau slug
+  Respons   : Object data artikel lengkap
+  -------------------------------------------------------------
+
+  POST /api/articles                                  [ADMIN]
+  Deskripsi : Membuat artikel baru
+  Format    : multipart/form-data
+  Field     : title, excerpt, content, categoryId
+  File      : image (maks 5MB)
+  Respons   : Data artikel yang baru dibuat
+  -------------------------------------------------------------
+
+  PUT  /api/articles/:id                              [ADMIN]
+  Deskripsi : Memperbarui data artikel
+  Respons   : Data artikel yang diperbarui
+  -------------------------------------------------------------
+
+  DELETE /api/articles/:id                            [ADMIN]
+  Deskripsi : Menghapus artikel beserta gambarnya
+  Respons   : Pesan sukses
+  -------------------------------------------------------------
+
+  ============================================================
+  F. PESAN (/api/messages)
+  ============================================================
+
+  POST /api/messages/contact                          [PUBLIK]
+  Deskripsi : Pengunjung mengirim pesan dari form Contact Us
+  Body      : { "name": "...", "email": "...", "phone": "...", "content": "..." }
+  Efek      : Pesan disimpan ke DB + notifikasi email ke Admin
+  Respons   : Data pesan yang terkirim
+  -------------------------------------------------------------
+
+  POST /api/messages/sample-request                   [PUBLIK]
+  Deskripsi : Pengunjung B2B mengajukan permintaan sampel produk
+  Body      : { "name": "...", "businessName": "...", "city": "...",
+                "phone": "...", "email": "..." }
+  Efek      : Data tersimpan ke DB + notifikasi email ke Admin
+  Respons   : Data pengajuan yang terkirim
+  -------------------------------------------------------------
+
+  GET  /api/messages/contact                          [ADMIN]
+  Deskripsi : Mengambil semua pesan kontak (diurutkan terbaru)
+  Respons   : Array data pesan kontak
+  -------------------------------------------------------------
+
+  PATCH /api/messages/contact/:id/status              [ADMIN]
+  Deskripsi : Memperbarui status pesan kontak
+  Body      : { "status": "READ" }   (UNREAD / READ / REPLIED)
+  Respons   : Data pesan yang diperbarui
+  -------------------------------------------------------------
+
+  DELETE /api/messages/contact/:id                    [ADMIN]
+  Deskripsi : Menghapus pesan kontak
+  Respons   : Pesan sukses
+  -------------------------------------------------------------
+
+  GET  /api/messages/sample-request                   [ADMIN]
+  Deskripsi : Mengambil semua pengajuan sampel
+  Respons   : Array data pengajuan sampel
+  -------------------------------------------------------------
+
+  PATCH /api/messages/sample-request/:id/status       [ADMIN]
+  Deskripsi : Memperbarui status pengajuan sampel
+  Body      : { "status": "REVIEWED" }  (PENDING/REVIEWED/SENT/REJECTED)
+  Respons   : Data pengajuan yang diperbarui
+  -------------------------------------------------------------
+
+  DELETE /api/messages/sample-request/:id             [ADMIN]
+  Deskripsi : Menghapus data pengajuan sampel
+  Respons   : Pesan sukses
+  -------------------------------------------------------------
+
+  ============================================================
+  G. GALERI (/api/galleries)
+  ============================================================
+
+  GET  /api/galleries                                 [PUBLIK]
+  Deskripsi : Mengambil semua foto galeri
+  Respons   : Array data galeri (urut berdasarkan field "order")
+  -------------------------------------------------------------
+
+  GET  /api/galleries/:id                             [PUBLIK]
+  Deskripsi : Mengambil 1 data galeri
+  Respons   : Object data galeri
+  -------------------------------------------------------------
+
+  POST /api/galleries                                 [ADMIN]
+  Deskripsi : Menambahkan foto baru ke galeri
+  Format    : multipart/form-data
+  Field     : title, description (opsional), type, order (opsional)
+  File      : image (maks 5MB, WAJIB)
+  Respons   : Data galeri yang baru dibuat
+  -------------------------------------------------------------
+
+  PUT  /api/galleries/:id                             [ADMIN]
+  Deskripsi : Memperbarui data galeri
+  Respons   : Data galeri yang diperbarui
+  -------------------------------------------------------------
+
+  DELETE /api/galleries/:id                           [ADMIN]
+  Deskripsi : Menghapus foto galeri (gambar di Cloudflare R2 ikut terhapus)
+  Respons   : Pesan sukses
+  -------------------------------------------------------------
+
+  ============================================================
+  H. MITRA / KLIEN (/api/clients)
+  ============================================================
+
+  GET  /api/clients                                   [PUBLIK]
+  Deskripsi : Mengambil semua data mitra/klien
+  Respons   : Array data mitra
+  -------------------------------------------------------------
+
+  GET  /api/clients/:id                               [PUBLIK]
+  Deskripsi : Mengambil 1 data mitra
+  Respons   : Object data mitra
+  -------------------------------------------------------------
+
+  POST /api/clients                                   [ADMIN]
+  Deskripsi : Menambahkan mitra baru
+  Format    : multipart/form-data
+  Field     : name
+  File      : image (logo mitra, maks 5MB, WAJIB)
+  Respons   : Data mitra yang baru dibuat
+  -------------------------------------------------------------
+
+  PUT  /api/clients/:id                               [ADMIN]
+  Deskripsi : Memperbarui data mitra
+  Respons   : Data mitra yang diperbarui
+  -------------------------------------------------------------
+
+  DELETE /api/clients/:id                             [ADMIN]
+  Deskripsi : Menghapus mitra (gambar di Cloudflare R2 ikut terhapus)
+  Respons   : Pesan sukses
+  -------------------------------------------------------------
+
+  ============================================================
+  I. SERTIFIKAT (/api/certificates)
+  ============================================================
+
+  GET  /api/certificates                              [PUBLIK]
+  Deskripsi : Mengambil semua sertifikat mutu
+  Respons   : Array data sertifikat
+  -------------------------------------------------------------
+
+  GET  /api/certificates/:id                          [PUBLIK]
+  Deskripsi : Mengambil 1 data sertifikat
+  Respons   : Object data sertifikat
+  -------------------------------------------------------------
+
+  POST /api/certificates                              [ADMIN]
+  Deskripsi : Menambahkan sertifikat baru
+  Format    : multipart/form-data
+  Field     : name, authority, scope, registrationNumber, link (opsional)
+  File      : image (opsional, maks 5MB)
+  Respons   : Data sertifikat yang baru dibuat
+  -------------------------------------------------------------
+
+  PUT  /api/certificates/:id                          [ADMIN]
+  Deskripsi : Memperbarui data sertifikat
+  Respons   : Data sertifikat yang diperbarui
+  -------------------------------------------------------------
+
+  DELETE /api/certificates/:id                        [ADMIN]
+  Deskripsi : Menghapus sertifikat
+  Respons   : Pesan sukses
+  -------------------------------------------------------------
+
+  ============================================================
+  J. TESTIMONI (/api/testimonials)
+  ============================================================
+
+  GET  /api/testimonials                              [PUBLIK]
+  Deskripsi : Mengambil semua testimoni
+  Respons   : Array data testimoni
+  -------------------------------------------------------------
+
+  GET  /api/testimonials/:id                          [PUBLIK]
+  Deskripsi : Mengambil 1 data testimoni
+  Respons   : Object data testimoni
+  -------------------------------------------------------------
+
+  POST /api/testimonials                              [ADMIN]
+  Deskripsi : Menambahkan testimoni baru
+  Format    : multipart/form-data
+  Field     : name, role, content, rating (1-5), tag (opsional)
+  File      : avatar (foto profil, opsional, maks 5MB)
+  Respons   : Data testimoni yang baru dibuat
+  -------------------------------------------------------------
+
+  PUT  /api/testimonials/:id                          [ADMIN]
+  Deskripsi : Memperbarui data testimoni
+  Respons   : Data testimoni yang diperbarui
+  -------------------------------------------------------------
+
+  DELETE /api/testimonials/:id                        [ADMIN]
+  Deskripsi : Menghapus testimoni
+  Respons   : Pesan sukses
+  -------------------------------------------------------------
+
+  ============================================================
+  K. PENGATURAN (/api/settings)
+  ============================================================
+
+  GET  /api/settings                                  [PUBLIK]
+  Deskripsi : Mengambil semua pengaturan aplikasi
+  Respons   : Array pasangan key-value pengaturan
+  -------------------------------------------------------------
+
+  GET  /api/settings/:key                             [PUBLIK]
+  Deskripsi : Mengambil nilai pengaturan berdasarkan key
+  Respons   : Object { key, value }
+  -------------------------------------------------------------
+
+  POST /api/settings                                  [ADMIN]
+  Deskripsi : Membuat pengaturan baru
+  Body      : { "key": "...", "value": "..." }
+  Respons   : Data pengaturan baru
+  -------------------------------------------------------------
+
+  PUT  /api/settings/:key                             [ADMIN]
+  Deskripsi : Memperbarui nilai pengaturan
+  Body      : { "value": "..." }
+  Respons   : Data pengaturan yang diperbarui
+  -------------------------------------------------------------
+
+  DELETE /api/settings/:key                           [ADMIN]
+  Deskripsi : Menghapus sebuah pengaturan
+  Respons   : Pesan sukses
+  -------------------------------------------------------------
+
+  ============================================================
+  L. DASBOR STATISTIK (/api/dashboard)
+  ============================================================
+
+  GET  /api/dashboard/stats                           [ADMIN]
+  Deskripsi : Mengambil ringkasan statistik untuk halaman Overview
+  Respons   : {
+                "products": 10,
+                "articles": 5,
+                "recipes": 8,
+                "clients": 12,
+                "certificates": 3
+              }
+  -------------------------------------------------------------
+
+
+================================================================================
+BAB 9. ARSITEKTUR & ALUR KERJA FRONTEND
+================================================================================
+
+  Frontend dibangun sebagai Single Page Application (SPA) menggunakan React.
+  Artinya, navigasi antar halaman terjadi di browser (tanpa reload penuh).
+
+  ALUR KERJA UTAMA:
+  -----------------
+  1. Browser membuka halaman -> React dimuat dari /frontend/src/main.jsx
+  2. App.jsx mendefinisikan semua rute (URL -> komponen halaman)
+  3. Saat Admin membuka /admin, ProtectedRoute memeriksa apakah ada sesi login
+  4. Jika belum login, otomatis diarahkan ke /admin/login
+  5. Jika sudah login, DashboardLayout ditampilkan dengan Sidebar dan konten halaman
+
+  PENGELOLAAN STATE GLOBAL (ZUSTAND):
+  ------------------------------------
+  File: frontend/src/store/authStore.js
+
+  State yang dikelola:
+  - user            : Data pengguna yang sedang login (null jika belum login)
+  - isLoggingIn     : Status loading saat menekan tombol Login
+  - isCheckingAuth  : Status loading saat aplikasi pertama kali dibuka
+  - error           : Pesan error dari server
+
+  Fungsi yang tersedia:
+  - login(email, password)  : Kirim request login ke backend, simpan data user
+  - logout()                : Kirim request logout, hapus data user
+  - checkAuth()             : Cek apakah cookie JWT masih valid (dipanggil saat buka halaman)
+  - clearError()            : Hapus pesan error dari tampilan
+
+  PENGELOLAAN STATE SERVER & CACHING (TANSTACK REACT QUERY):
+  -----------------------------------------------------------
+  Lokasi: frontend/src/hooks/api/
+
+  Hooks (Mesin Data) yang digunakan untuk mengambil data dari backend secara instan:
+  - useProducts     : Mengambil data katalog produk
+  - useArticles     : Mengambil data artikel
+  - useRecipes      : Mengambil data resep
+  - useGalleries    : Mengambil data foto galeri footage
+  - useTestimonials : Mengambil data ulasan dari pelanggan
+  - useClients      : Mengambil data logo mitra/klien
+
+  Manfaat Utama Arsitektur Ini:
+  - Data hasil fetch akan disimpan dengan aman di memori browser (Cache) selama 5 menit.
+  - Jika pengunjung kembali ke halaman yang sama (misal dari Produk kembali ke Beranda), 
+    data langsung ditampilkan seketika (0 detik) tanpa loading screen.
+  - Memangkas secara drastis jumlah panggilan API berulang (request) ke server database.
+
+  PENGATURAN HTTP CLIENT (AXIOS):
+  --------------------------------
+  File: frontend/src/lib/axios.js
+
+  - Base URL : http://localhost:5000/api (atau dari VITE_API_URL di .env)
+  - withCredentials: true -> Agar cookie JWT otomatis dikirim di setiap request
+  - Global Interceptor: Jika server mati (Network Error) atau token kedaluwarsa (401),
+    sistem akan otomatis memunculkan peringatan dan mengarahkan ke halaman login.
+
+  PROTEKSI RUTE (PROTECTED ROUTE):
+  ----------------------------------
+  File: frontend/src/components/dashboard/ProtectedRoute.jsx
+
+  Cara kerja:
+  1. Saat halaman /admin diakses, ProtectedRoute memanggil checkAuth()
+  2. checkAuth() melakukan request GET /api/auth/me ke backend
+  3. Jika backend membalas dengan data user (cookie valid) -> halaman dasbor ditampilkan
+  4. Jika backend menolak (tidak ada cookie/cookie kedaluwarsa) -> redirect ke /admin/login
+
+
+================================================================================
+BAB 10. HALAMAN LANDING PAGE (PENGUNJUNG)
+================================================================================
+
+  URL Base  : http://localhost:5173
+  Layout    : LandingLayout.jsx (Navbar + Footer menyelimuti semua halaman)
+
+  Daftar Halaman dan URL:
+  -----------------------
+
+  1. BERANDA (/)
+     - Menampilkan hero section, produk unggulan, resep terbaru
+     - Galeri foto polaroid (dari database, tipe: BERANDA_POLAROID)
+     - Testimoni pelanggan, daftar mitra/klien
+     - Form request sampel produk (untuk pelaku usaha B2B)
+
+  2. TENTANG KAMI (/tentang-kami)
+     - Profil dan sejarah perusahaan Baso Yen
+     - Galeri foto fasilitas (dari database, tipe: FASILITAS_TENTANG_KAMI)
+     - Daftar sertifikat mutu (BPOM, Halal, dll)
+     - Video profil perusahaan (embedded YouTube)
+
+  3. LAYANAN (/layanan)
+     - Penjelasan layanan B2B, B2C, dan katering
+
+  4. PRODUK (/produk)
+     - Katalog semua produk dari database dengan filter kategori
+
+  5. DETAIL PRODUK (/produk/:slug)
+     - Halaman detail satu produk berdasarkan slug URL
+
+  6. RESEP (/resep)
+     - Daftar semua resep dari database
+
+  7. DETAIL RESEP (/resep/:slug)
+     - Halaman detail resep lengkap dengan bahan dan cara membuat
+
+  8. ARTIKEL (/article)
+     - Daftar semua artikel edukasi dari database
+
+  9. DETAIL ARTIKEL (/article/:slug)
+     - Halaman baca artikel lengkap
+
+  10. KONTAK (/kontak)
+      - Informasi kontak perusahaan
+      - Form pesan langsung (mengirim ke /api/messages/contact)
+
+
+================================================================================
+BAB 11. HALAMAN DASBOR ADMIN (CMS)
+================================================================================
+
+  URL Base  : http://localhost:5173/admin
+  Layout    : DashboardLayout.jsx (Sidebar navigasi + Header + Konten)
+  Akses     : Harus login terlebih dahulu
+
+  Cara Login:
+  1. Buka http://localhost:5173/admin/login
+  2. Masukkan email dan password admin
+  3. Jika berhasil, akan diarahkan ke halaman Overview
+
+  Daftar Menu dan Halaman Dasbor:
+  --------------------------------
+
+  1. OVERVIEW (/admin)
+     - Halaman beranda dasbor
+     - Sapaan berdasarkan waktu (Pagi/Siang/Sore/Malam)
+     - Ringkasan statistik: jumlah produk, artikel, resep, mitra, sertifikat
+     - Shortcut ke fitur utama
+     - Badge merah jika ada pesan belum terbaca
+
+  2. PESAN MASUK (/admin/messages)
+     - Tab 1: Pesan Kontak (dari form Contact Us di website)
+       * Lihat nama, email, nomor telepon, isi pesan, dan status
+       * Ubah status: UNREAD -> READ -> REPLIED
+       * Hapus pesan
+     - Tab 2: Request Sampel (pengajuan B2B dari pengunjung)
+       * Lihat nama, usaha, kota, kontak pengaju
+       * Ubah status: PENDING -> REVIEWED -> SENT atau REJECTED
+       * Hapus pengajuan
+
+  3. KATEGORI (/admin/categories)
+     - Membuat kategori baru untuk Produk, Resep, atau Artikel
+     - Mengedit nama kategori
+     - Menghapus kategori
+
+  4. PRODUK (/admin/products)
+     - Tabel daftar semua produk
+     - Form tambah produk baru (dengan upload gambar)
+     - Form edit produk (gambar bisa diganti atau dibiarkan)
+     - Hapus produk
+
+  5. ARTIKEL (/admin/articles)
+     - Tabel daftar semua artikel
+     - Form tambah artikel (dengan editor teks kaya/Rich Text Editor)
+     - Form edit artikel
+     - Hapus artikel
+
+  6. RESEP (/admin/recipes)
+     - Tabel daftar semua resep
+     - Form tambah resep (dengan field waktu, tingkat kesulitan, dan konten rich text)
+     - Form edit resep
+     - Hapus resep
+
+  7. TESTIMONI (/admin/testimonials)
+     - Tabel daftar semua testimoni
+     - Form tambah testimoni (nama, jabatan, isi, rating bintang, tag, foto profil)
+     - Form edit dan hapus testimoni
+
+  8. SERTIFIKAT (/admin/certificates)
+     - Tabel daftar semua sertifikat mutu
+     - Form tambah sertifikat (nama, lembaga, nomor registrasi, gambar, link)
+     - Form edit dan hapus sertifikat
+
+  9. MITRA & KLIEN (/admin/clients)
+     - Tabel daftar semua mitra/klien
+     - Form tambah mitra (nama + upload logo)
+     - Form edit dan hapus mitra
+
+  10. GALERI (/admin/galleries)
+      - Tabel daftar semua foto galeri
+      - Form tambah foto (judul, deskripsi, tipe galeri, urutan tampil, upload gambar)
+      - Tipe galeri menentukan di halaman mana foto tampil:
+        * BERANDA_POLAROID          -> Muncul di section "Tentang Singkat" di Beranda
+        * FASILITAS_TENTANG_KAMI    -> Muncul di halaman Tentang Kami
+      - Form edit dan hapus foto
+
+
+================================================================================
+BAB 12. SISTEM KEAMANAN APLIKASI
+================================================================================
+
+  BACKEND:
+  --------
+  1. Helmet
+     Mengatur HTTP security headers secara otomatis untuk mencegah serangan
+     umum seperti XSS, Clickjacking, dan MIME sniffing.
+
+  2. CORS (Cross-Origin Resource Sharing)
+     Hanya mengizinkan request yang berasal dari URL frontend yang terdaftar
+     (diatur di variabel FRONTEND_URL). Request dari domain lain akan ditolak.
+
+  3. Rate Limiting
+     Membatasi jumlah request dari satu IP address dalam 15 menit.
+     - Mode Production : maksimal 100 request per 15 menit
+     - Mode Development: maksimal 5000 request per 15 menit (lebih longgar)
+     Mencegah serangan Brute Force dan DDoS.
+
+  4. JWT Authentication (JSON Web Token)
+     Token diterbitkan saat login dan disimpan sebagai HttpOnly Cookie.
+     HttpOnly Cookie tidak bisa dibaca oleh JavaScript di browser,
+     sehingga terlindungi dari serangan XSS.
+     Token berlaku selama 7 hari.
+
+  5. Password Hashing (Bcrypt)
+     Password admin tidak pernah disimpan dalam bentuk teks asli.
+     Selalu dienkripsi menggunakan Bcrypt sebelum masuk ke database.
+
+  6. Validasi Input (Zod)
+     Setiap input dari pengguna divalidasi ketat sebelum diproses.
+     Jika format tidak sesuai (email tidak valid, field kosong, dll),
+     server akan menolak request dan mengirimkan pesan error yang jelas.
+
+  FRONTEND:
+  ---------
+  1. Protected Route
+     Halaman dasbor tidak bisa diakses langsung lewat URL.
+     Setiap kali halaman /admin dibuka, sistem memeriksa cookie ke server.
+     Jika tidak valid, pengguna langsung diarahkan ke halaman login.
+
+  2. Global Axios Interceptor
+     Setiap response dari server dipantau.
+     Jika terjadi Network Error (server mati) atau 401 Unauthorized,
+     sistem otomatis mengeluarkan peringatan dan memaksa logout.
+
+  3. withCredentials: true
+     Memastikan cookie JWT selalu dikirimkan bersama setiap request API,
+     sehingga sesi admin selalu terverifikasi di sisi server.
+
+
+================================================================================
+BAB 13. LAYANAN EKSTERNAL YANG DIGUNAKAN
+================================================================================
+
+  1. CLOUDFLARE R2 (Penyimpanan Gambar)
+     Website   : https://dash.cloudflare.com
+     Kegunaan  : Semua gambar yang diunggah (produk, artikel, galeri, dll)
+                 disimpan di server Cloudflare R2, bukan di server lokal.
+     Alur kerja:
+     - Admin upload gambar lewat form di dasbor
+     - Multer membaca file gambar ke dalam memori (buffer)
+     - File buffer dikirimkan ke Cloudflare R2 via API
+     - Cloudflare R2 membalas dengan URL publik gambar
+     - URL tersebut disimpan di database PostgreSQL
+
+  2. GMAIL SMTP (Notifikasi Email)
+     Kegunaan  : Mengirim email notifikasi ke admin ketika:
+                 a) Ada pesan baru dari form Contact Us
+                 b) Ada pengajuan sampel produk baru
+     Konfigurasi: Menggunakan Gmail App Password (bukan password utama Gmail)
+     Cara buat : myaccount.google.com -> Security -> 2-Step Verification
+                 -> App Passwords -> Buat password baru
+
+  3. POSTGRESQL (Database)
+     Kegunaan  : Menyimpan semua data aplikasi (produk, artikel, pengguna, dll)
+     ORM       : Prisma digunakan sebagai jembatan antara Node.js dan PostgreSQL
+                 sehingga query database bisa ditulis dalam JavaScript.
+
+
+================================================================================
+BAB 14. CATATAN PENTING UNTUK PEMELIHARAAN
+================================================================================
+
+  1. MENAMBAHKAN ADMIN BARU
+     Karena tidak ada halaman registrasi, admin baru harus dibuat langsung
+     via Prisma Studio atau script seeder.
+
+     Cara via Prisma Studio:
+       $ cd backend
+       $ npx prisma studio
+     Buka http://localhost:5555, pilih tabel "User", klik "Add record".
+     PERHATIAN: Password harus di-hash dulu menggunakan bcrypt sebelum disimpan!
+
+     Cara lebih mudah: Modifikasi file backend/prisma/seed.mjs dan jalankan:
+       $ npx prisma db seed
+
+  2. MIGRASI DATABASE (SAAT ADA PERUBAHAN SCHEMA)
+     Jika Anda mengedit file backend/prisma/schema.prisma, jalankan:
+       $ cd backend
+       $ npx prisma migrate dev --name deskripsi_perubahan
+     Perintah ini akan membuat file migrasi dan menerapkannya ke database.
+
+  3. MELIHAT DATABASE SECARA VISUAL
+     Gunakan Prisma Studio untuk melihat dan mengedit data langsung:
+       $ cd backend
+       $ npx prisma studio
+     Buka: http://localhost:5555
+
+  4. MENGGANTI GAMBAR LAMA DI CLOUDFLARE R2
+     Saat Admin mengedit data dan mengunggah gambar baru, sistem secara otomatis:
+     - Menghapus gambar lama dari Cloudflare R2
+     - Mengunggah gambar baru
+     - Menyimpan URL baru ke database
+     Tidak perlu menghapus gambar lama secara manual.
+
+  5. JIKA SERVER BACKEND TIDAK BISA JALAN
+     Kemungkinan penyebab:
+     a) Port 5000 sudah dipakai proses lain
+        Solusi: jalankan "lsof -i :5000" untuk cek, lalu "kill -9 [PID]"
+     b) File .env tidak ada atau ada yang kosong
+        Solusi: Pastikan semua variabel di .env sudah terisi dengan benar
+     c) Database tidak aktif
+        Solusi: Pastikan PostgreSQL sudah berjalan ("sudo service postgresql start")
+     d) Dependensi belum diinstal
+        Solusi: Jalankan "npm install" di folder backend/
+
+  6. JIKA GAMBAR TIDAK MUNCUL
+     Kemungkinan penyebab:
+     a) Kredensial Cloudflare R2 salah di .env
+     c) Internet Positif memblokir domain .r2.dev (gunakan Custom Domain)
+     b) Kuota operasi Cloudflare R2 gratis habis (Class A/B operations)
+     Solusi: Periksa dashboard Cloudflare R2 di https://dash.cloudflare.com
+
+  7. EMAIL NOTIFIKASI TIDAK TERKIRIM
+     Kemungkinan penyebab:
+     a) GMAIL_PASS di .env sudah tidak valid (App Password expired)
+     b) Fitur 2-Step Verification Google dinonaktifkan
+     Solusi: Buat ulang App Password di Google Account
+
+  8. BACKUP DATABASE
+     Untuk backup database PostgreSQL, jalankan:
+       $ pg_dump -U basoyen_app basoyencms_db > backup_$(date +%Y%m%d).sql
+     Untuk restore dari backup:
+       $ psql -U basoyen_app basoyencms_db < nama_file_backup.sql
+
+
+================================================================================
+BAB 15. CHANGELOG & RIWAYAT PEMBARUAN
+================================================================================
+
+  [v1.0.1] - Peningkatan Performa Sisi Klien (Frontend)
+  - Fitur: Implementasi TanStack React Query v5 sebagai mesin state server.
+  - Perubahan: Halaman Publik (Katalog Produk, Artikel, Resep, dan komponen
+    Beranda seperti Galeri, Testimoni, Mitra) kini menggunakan arsitektur
+    caching (staleTime: 5 menit). Hal ini menghilangkan loading berlebih saat 
+    navigasi dan memangkas drastis beban request ke database PostgreSQL.
+  - Tambahan: Pembuatan custom hooks baru (useProducts, useArticles, useRecipes,
+    useGalleries, useTestimonials, useClients) untuk memusatkan logika fetching.
+
+
+================================================================================
+                        AKHIR DOKUMENTASI
+         Dibuat dengan teliti untuk kemudahan pemeliharaan proyek.
+================================================================================

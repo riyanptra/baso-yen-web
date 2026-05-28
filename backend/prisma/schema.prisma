@@ -1,0 +1,209 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// -----------------------------------------------------
+// ENUMS
+// -----------------------------------------------------
+
+enum Role {
+  ADMIN
+}
+
+enum CategoryType {
+  PRODUCT
+  RECIPE
+  ARTICLE
+}
+
+enum MessageStatus {
+  UNREAD
+  READ
+  REPLIED
+}
+
+enum SampleStatus {
+  PENDING
+  REVIEWED
+  SENT
+  REJECTED
+}
+
+enum GalleryType {
+  FASILITAS_TENTANG_KAMI
+  BERANDA_POLAROID
+}
+
+// -----------------------------------------------------
+// MODELS
+// -----------------------------------------------------
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(ADMIN)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  articles Article[]
+  recipes  Recipe[]
+  products Product[]
+}
+
+model Category {
+  id        String       @id @default(uuid())
+  name      String
+  slug      String       @unique
+  type      CategoryType
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  // Relations
+  products Product[]
+  recipes  Recipe[]
+  articles Article[]
+}
+
+model Product {
+  id           String   @id @default(uuid())
+  name         String
+  slug         String   @unique
+  description  String   @db.Text
+  packSize     String
+  image        String
+  badge        String?
+  categoryId   String
+  createdById  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  // Relations
+  category     Category @relation(fields: [categoryId], references: [id])
+  createdBy    User     @relation(fields: [createdById], references: [id])
+}
+
+model Recipe {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  time        String
+  difficulty  String
+  image       String
+  description String   @db.Text
+  content     String   @db.Text
+  categoryId  String
+  authorId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  category    Category @relation(fields: [categoryId], references: [id])
+  author      User     @relation(fields: [authorId], references: [id])
+}
+
+model Article {
+  id         String   @id @default(uuid())
+  title      String
+  slug       String   @unique
+  image      String
+  excerpt    String   @db.Text  
+  content    String   @db.Text
+  categoryId String
+  authorId   String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  // Relations
+  category   Category @relation(fields: [categoryId], references: [id])
+  author     User     @relation(fields: [authorId], references: [id])
+
+}
+
+model Gallery {
+  id          String      @id @default(uuid())
+  title       String
+  description String?
+  image       String
+  type        GalleryType @default(FASILITAS_TENTANG_KAMI)
+  order       Int         @default(0)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Client {
+  id        String   @id @default(uuid())
+  name      String
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Certificate {
+  id                 String   @id @default(uuid())
+  name               String
+  authority          String
+  scope              String
+  registrationNumber String
+  image              String?  
+  link               String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Setting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ServiceMessage {
+  id        String        @id @default(uuid())
+  name      String
+  email     String
+  phone     String
+  content   String        @db.Text
+  status    MessageStatus @default(UNREAD)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model SampleRequestMessage {
+  id           String       @id @default(uuid())
+  name         String
+  businessName String
+  city         String
+  phone        String
+  email        String
+  status       SampleStatus @default(PENDING)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model Testimonial {
+  id        String   @id @default(uuid())
+  name      String
+  role      String
+  content   String   @db.Text
+  rating    Int      @default(5)
+  tag       String?
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
