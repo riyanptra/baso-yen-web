@@ -3,7 +3,7 @@ import ScrollReveal from "../../ui/ScrollReveal";
 
 import { useClients } from "../../../hooks/api/useClients";
 
-export default function MitraSection() {  
+export default function MitraSection() {
   const { data: clientLogos = [] } = useClients();
 
   // Membagi logo menjadi dua baris untuk efek counter-scrolling secara dinamis
@@ -28,7 +28,8 @@ export default function MitraSection() {
                 key={`set1-${client.name}-${idx}`}
                 className="flex shrink-0 items-center justify-center w-[140px] h-[80px] sm:w-[170px] sm:h-[96px] bg-[#FCFAF8] border border-yen-cream/80 rounded-2xl shadow-[0_4px_12px_rgba(227,30,36,0.02)] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-yen-accent/30 hover:shadow-[0_12px_24px_rgba(227,30,36,0.08)] group/card"
               >
-                <img loading="lazy"
+                <img decoding="async" 
+                  loading="lazy"
                   src={client.src}
                   alt={client.name}
                   className="max-h-full max-w-full object-contain group-hover/card:scale-105 transition-all duration-300 select-none"
@@ -44,7 +45,8 @@ export default function MitraSection() {
                 key={`set2-${client.name}-${idx}`}
                 className="flex shrink-0 items-center justify-center w-[140px] h-[80px] sm:w-[170px] sm:h-[96px] bg-[#FCFAF8] border border-yen-cream/80 rounded-2xl shadow-[0_4px_12px_rgba(227,30,36,0.02)] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-yen-accent/30 hover:shadow-[0_12px_24px_rgba(227,30,36,0.08)] group/card"
               >
-                <img loading="lazy"
+                <img decoding="async" 
+                  loading="lazy"
                   src={client.src}
                   alt={client.name}
                   className="max-h-full max-w-full object-contain group-hover/card:scale-105 transition-all duration-300 select-none"
@@ -60,7 +62,7 @@ export default function MitraSection() {
   return (
     <section className="bg-yen-white pt-12 pb-20 overflow-hidden border-b border-yen-accent/10 relative bg-grid-pattern">
       {/* Background Soft Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-yen-accent/5 rounded-full blur-[120px] pointer-events-none z-0" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(227,30,36,0.05)_0%,transparent_60%)] pointer-events-none z-0" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12 text-center relative z-10">
         <ScrollReveal>
@@ -70,10 +72,9 @@ export default function MitraSection() {
           <h2 className="font-bebas text-4xl sm:text-6xl font-black text-yen-dark mt-3 leading-none uppercase">
             klien <span className="text-yen-accent">Kami</span>
           </h2>
-          <p className="font-jakarta text-sm md:text-base text-yen-neutral mt-4 max-w-2xl mx-auto leading-relaxed">
-            Menjadi pilihan utama dan dipercaya oleh berbagai hotel bintang
-            lima, catering premium, hingga brand kuliner ternama di seluruh
-            Indonesia.
+          <p className="font-jakarta text-md md:text-base text-yen-neutral mt-4 max-w-2xl mx-auto leading-relaxed">
+            Menjadi pilihan utama dan dipercaya oleh berbagai Resto,Hotel,Cafe
+            dan Foodcourt ternama di seluruh Indonesia
           </p>
         </ScrollReveal>
       </div>

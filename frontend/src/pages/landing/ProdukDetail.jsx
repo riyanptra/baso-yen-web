@@ -6,6 +6,8 @@ import Button from "../../components/ui/Button";
 import SocialShare from "../../components/ui/SocialShare";
 import SEO from "../../components/ui/SEO";
 
+import { whatsappConfig } from "../../data/whatsappMessage";
+
 function ProductImage({ src, alt, category }) {
   const [hasError, setHasError] = useState(false);
 
@@ -156,22 +158,9 @@ export default function ProdukDetail() {
 
             {/* Aksi Pembelian */}
             <div className="space-y-4">
-              <div className="flex gap-4">
-                {/* Shopee */}
-                <a href="https://shopee.co.id/basoyen_official" target="_blank" rel="noopener noreferrer" className="flex-1">
-                  <button className="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl font-bebas text-sm tracking-wider text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg cursor-pointer" style={{ background: "linear-gradient(135deg, #EE4D2D, #FF7337)" }}>
-                    Shopee
-                  </button>
-                </a>
-                {/* Tokopedia */}
-                <a href="https://www.tokopedia.com/basoyen" target="_blank" rel="noopener noreferrer" className="flex-1">
-                  <button className="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl font-bebas text-sm tracking-wider text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg cursor-pointer" style={{ background: "linear-gradient(135deg, #03AC0E, #029B0D)" }}>
-                    Tokopedia
-                  </button>
-                </a>
-              </div>
+
               
-              <a href={`https://wa.me/6289678391030?text=Halo%20Baso%20Yen,%20saya%20tertarik%20memesan%20produk%20${encodeURIComponent(product.name)}`} target="_blank" rel="noopener noreferrer" className="block">
+              <a href={whatsappConfig.generateOrderUrl()} target="_blank" rel="noopener noreferrer" className="block">
                 <Button variant="primary" className="w-full py-4 text-sm tracking-wider gap-2 shadow-md hover:shadow-red-500/25">
                   Pesan Sekarang via WhatsApp
                 </Button>
@@ -180,7 +169,7 @@ export default function ProdukDetail() {
 
             {/* Tombol Bagikan */}
             <SocialShare 
-              url={`https://basoyen.com/produk/${slug}`}
+              url={typeof window !== "undefined" ? window.location.href : ""}
               title={product.name}
               text={`Lihat ${product.name} kualitas premium dari Baso Yen!`}
             />

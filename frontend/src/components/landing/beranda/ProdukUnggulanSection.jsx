@@ -10,7 +10,7 @@ const ProductCard = ({ prod }) => (
       {/* Image Container with high style */}
       <div className="aspect-square bg-[#FFF6F0] border border-yen-cream/50 flex items-center justify-center rounded-[20px] mb-4 relative overflow-hidden">
         {prod.image ? (
-          <img
+          <img decoding="async" loading="lazy" 
             src={prod.image}
             alt={prod.name}
             className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
@@ -64,10 +64,13 @@ export default function ProdukUnggulanSection() {
               BEST SELLER
             </SectionLabel>
             <h2 className="font-bebas text-4xl sm:text-6xl font-bold text-yen-dark mt-2">
-              Produk Unggulan
+              Produk <span className="text-yen-accent">Unggulan</span>
             </h2>
-            <p className="font-jakarta text-sm text-yen-neutral mt-4 max-w-2xl leading-relaxed text-left">
-              Temukan varian produk terlaris pilihan kami, mulai dari mie basah artisan dengan kekenyalan sempurna, bakso sapi murni bertekstur padat, hingga sosis premium. Diproduksi higienis setiap hari demi menjaga kesegaran dan cita rasa otentik yang khas.
+            <p className="font-jakarta text-md text-yen-neutral mt-4 max-w-2xl leading-relaxed text-left">
+              Temukan varian produk terlaris pilihan kami, mulai dari mie basah
+              artisan dengan kekenyalan sempurna, bakso sapi murni bertekstur
+              padat, hingga sosis premium. Diproduksi higienis setiap hari demi
+              menjaga kesegaran dan cita rasa otentik yang khas.
             </p>
           </div>
           <Link to="/produk">

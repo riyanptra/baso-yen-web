@@ -49,21 +49,27 @@ export const getCertificateById = async (id) => {
  * @param {Buffer} [fileBuffer] - File gambar sertifikat (opsional)
  * @returns {Promise<object>} Data sertifikat yang baru dibuat
  */
-export const createCertificate = async (payload, file) => {
+export const createCertificate = async (payload, files) => {
   // 1. Validasi input
   const validatedData = createCertificateSchema.parse(payload);
 
-  // 2. Upload gambar ke R2 (Opsional)
+  // 2. Upload gambar dan icon ke R2 (Opsional)
   let imageUrl = null;
-  if (file) {
-    try {
-      const uploadResult = await uploadImageToR2(file.buffer, "basoyen/certificates");
+  let iconUrl = null;
+  
+  try {
+    if (files.image && files.image[0]) {
+      const uploadResult = await uploadImageToR2(files.image[0].buffer, "basoyen/certificates");
       imageUrl = uploadResult.secure_url;
-    } catch (error) {
-      const err = new Error(error.message);
-      err.statusCode = 500;
-      throw err;
     }
+    if (files.icon && files.icon[0]) {
+      const uploadResult = await uploadImageToR2(files.icon[0].buffer, "basoyen/certificates/icons");
+      iconUrl = uploadResult.secure_url;
+    }
+  } catch (error) {
+    const err = new Error(error.message);
+    err.statusCode = 500;
+    throw err;
   }
 
   // 4. Simpan ke database
@@ -71,6 +77,7 @@ export const createCertificate = async (payload, file) => {
     data: {
       ...validatedData,
       ...(imageUrl ? { image: imageUrl } : {}),
+      ...(iconUrl ? { icon: iconUrl } : {}),
     },
   });
 
@@ -88,27 +95,37 @@ export const createCertificate = async (payload, file) => {
  * @param {Buffer} [fileBuffer] - File gambar sertifikat baru (opsional)
  * @returns {Promise<object>} Data sertifikat setelah diperbarui
  */
-export const updateCertificate = async (id, payload, file) => {
+export const updateCertificate = async (id, payload, files) => {
   // 1. Validasi
   const validatedData = updateCertificateSchema.parse(payload);
   const existingCertificate = await getCertificateById(id);
   const updateData = { ...validatedData };
 
   // 2. Jika ada gambar baru
-  if (file) {
-    try {
-      const uploadResult = await uploadImageToR2(file.buffer, "basoyen/certificates");
+  try {
+    if (files.image && files.image[0]) {
+      const uploadResult = await uploadImageToR2(files.image[0].buffer, "basoyen/certificates");
       updateData.image = uploadResult.secure_url;
 
       const oldObjectKey = extractObjectKey(existingCertificate.image);
       if (oldObjectKey) {
         await deleteImageFromR2(oldObjectKey);
       }
-    } catch (error) {
-      const err = new Error(error.message);
-      err.statusCode = 500;
-      throw err;
     }
+    
+    if (files.icon && files.icon[0]) {
+      const uploadResult = await uploadImageToR2(files.icon[0].buffer, "basoyen/certificates/icons");
+      updateData.icon = uploadResult.secure_url;
+
+      const oldIconKey = extractObjectKey(existingCertificate.icon);
+      if (oldIconKey) {
+        await deleteImageFromR2(oldIconKey);
+      }
+    }
+  } catch (error) {
+    const err = new Error(error.message);
+    err.statusCode = 500;
+    throw err;
   }
 
   // 3. Simpan perubahan
@@ -135,6 +152,11 @@ export const deleteCertificate = async (id) => {
   const objectKey = extractObjectKey(existingCertificate.image);
   if (objectKey) {
     await deleteImageFromR2(objectKey);
+  }
+  
+  const iconKey = extractObjectKey(existingCertificate.icon);
+  if (iconKey) {
+    await deleteImageFromR2(iconKey);
   }
 
   // 2. Hapus data

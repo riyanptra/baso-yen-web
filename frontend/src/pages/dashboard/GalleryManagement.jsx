@@ -191,7 +191,7 @@ export default function GalleryManagement() {
             {filteredData.map((item) => (
               <div key={item.id} className="group rounded-2xl overflow-hidden bg-gray-50 border border-gray-100">
                 <div className="relative aspect-video overflow-hidden">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img decoding="async" loading="lazy" src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute top-2 right-2 bg-white/90 backdrop-blur text-[10px] font-bold px-2 py-1 rounded-md text-yen-dark uppercase tracking-wider">
                     {item.type === 'FASILITAS_TENTANG_KAMI' ? 'Fasilitas' : 'Polaroid'}
                   </div>
@@ -224,7 +224,7 @@ export default function GalleryManagement() {
             <div onClick={() => fileInputRef.current?.click()} className="w-full aspect-video border-2 border-dashed border-gray-300 hover:border-yen-accent rounded-xl flex items-center justify-center bg-gray-50 cursor-pointer overflow-hidden transition-colors relative group">
               {imagePreview ? (
                 <>
-                  <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
+                  <img decoding="async" loading="lazy" src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center"><span className="text-white text-sm font-medium">Ganti Gambar</span></div>
                 </>
               ) : (

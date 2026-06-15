@@ -38,7 +38,6 @@ const TestimonialManagement = lazy(() => import("./pages/dashboard/TestimonialMa
 const CertificateManagement = lazy(() => import("./pages/dashboard/CertificateManagement"));
 const ClientManagement = lazy(() => import("./pages/dashboard/ClientManagement"));
 const GalleryManagement = lazy(() => import("./pages/dashboard/GalleryManagement"));
-const MessageManagement = lazy(() => import("./pages/dashboard/MessageManagement"));
 
 // Peta route → judul tab browser
 const PAGE_TITLES = {
@@ -115,7 +114,6 @@ function AnimatedRoutes() {
               <Route path="/admin/certificates" element={<CertificateManagement />} />
               <Route path="/admin/clients" element={<ClientManagement />} />
               <Route path="/admin/galleries" element={<GalleryManagement />} />
-              <Route path="/admin/messages" element={<MessageManagement />} />
             </Route>
           </Route>
 

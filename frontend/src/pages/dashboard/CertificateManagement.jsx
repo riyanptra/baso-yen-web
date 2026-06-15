@@ -22,6 +22,10 @@ export default function CertificateManagement() {
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
 
+  const [iconFile, setIconFile] = useState(null);
+  const [iconPreview, setIconPreview] = useState(null);
+  const iconInputRef = useRef(null);
+
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
 
@@ -41,6 +45,8 @@ export default function CertificateManagement() {
     setFormData({ name: "", authority: "", scope: "", registrationNumber: "", link: "" });
     setImageFile(null);
     setImagePreview(null);
+    setIconFile(null);
+    setIconPreview(null);
     setIsModalOpen(true);
   };
 
@@ -60,6 +66,8 @@ export default function CertificateManagement() {
     });
     setImageFile(null);
     setImagePreview(item.image);
+    setIconFile(null);
+    setIconPreview(item.icon || null);
     setIsModalOpen(true);
   };
 
@@ -73,6 +81,14 @@ export default function CertificateManagement() {
     if (file) {
       setImageFile(file);
       setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleIconChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setIconFile(file);
+      setIconPreview(URL.createObjectURL(file));
     }
   };
 
@@ -103,14 +119,15 @@ export default function CertificateManagement() {
     let submitData;
     let headers = {};
 
-    if (imageFile) {
+    if (imageFile || iconFile) {
       submitData = new FormData();
       submitData.append("name", formData.name);
       submitData.append("authority", formData.authority);
       submitData.append("scope", formData.scope);
       submitData.append("registrationNumber", formData.registrationNumber);
       if (formData.link) submitData.append("link", formData.link);
-      submitData.append("image", imageFile);
+      if (imageFile) submitData.append("image", imageFile);
+      if (iconFile) submitData.append("icon", iconFile);
       headers = { "Content-Type": "multipart/form-data" };
     } else {
       submitData = { ...formData };
@@ -205,15 +222,24 @@ export default function CertificateManagement() {
               {!isLoading && filteredData.map((item) => (
                 <tr key={item.id} className="hover:bg-gray-50/50 transition-colors">
                   <td className="px-6 py-4">
-                    {item.image ? (
-                      <div className="w-16 h-20 rounded-xl overflow-hidden border border-gray-200 shadow-sm cursor-pointer hover:scale-110 transition-transform">
-                        <img src={item.image} alt="Sertifikat" className="w-full h-full object-cover" />
-                      </div>
-                    ) : (
-                      <div className="w-16 h-20 rounded-xl bg-blue-50 flex items-center justify-center border border-blue-100 text-blue-400">
-                        <FileBadge className="w-8 h-8" />
-                      </div>
-                    )}
+                    <div className="flex gap-2">
+                      {item.icon ? (
+                        <div className="w-16 h-20 rounded-xl bg-white flex items-center justify-center border border-gray-200 shadow-sm p-1">
+                          <img decoding="async" loading="lazy" src={item.icon} alt="Icon" className="w-full h-full object-contain" />
+                        </div>
+                      ) : null}
+                      {item.image ? (
+                        <div className="w-16 h-20 rounded-xl overflow-hidden border border-gray-200 shadow-sm cursor-pointer hover:scale-110 transition-transform">
+                          <img decoding="async" loading="lazy" src={item.image} alt="Sertifikat" className="w-full h-full object-cover" />
+                        </div>
+                      ) : (
+                        !item.icon && (
+                          <div className="w-16 h-20 rounded-xl bg-blue-50 flex items-center justify-center border border-blue-100 text-blue-400">
+                            <FileBadge className="w-8 h-8" />
+                          </div>
+                        )
+                      )}
+                    </div>
                   </td>
                   <td className="px-6 py-4">
                     <p className="font-bold text-yen-dark text-lg">{item.name}</p>
@@ -278,18 +304,35 @@ export default function CertificateManagement() {
             <input type="url" value={formData.link} onChange={(e) => setFormData({ ...formData, link: e.target.value })} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 focus:ring-2 focus:ring-yen-accent/50 focus:outline-none" placeholder="https://..." />
           </div>
 
-          <div>
-            <label className="block text-sm font-bold text-gray-700 mb-1">Foto / Hasil Scan Dokumen (Opsional)</label>
-            <div onClick={() => fileInputRef.current?.click()} className="w-full h-40 border-2 border-dashed border-gray-300 hover:border-yen-accent rounded-xl flex items-center justify-center bg-gray-50 cursor-pointer overflow-hidden transition-colors relative group">
-              {imagePreview ? (
-                <>
-                  <img src={imagePreview} alt="Preview" className="w-full h-full object-contain p-2" />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center"><span className="text-white text-sm font-medium">Ubah Dokumen</span></div>
-                </>
-              ) : (
-                <div className="text-center text-gray-500"><UploadCloud className="w-8 h-8 mx-auto mb-2"/><p className="text-sm">Klik untuk mengunggah gambar/scan sertifikat</p></div>
-              )}
-              <input type="file" ref={fileInputRef} onChange={handleImageChange} accept="image/*" className="hidden" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-1">Logo / Icon Sertifikat (Opsional)</label>
+              <div onClick={() => iconInputRef.current?.click()} className="w-full h-40 border-2 border-dashed border-gray-300 hover:border-yen-accent rounded-xl flex items-center justify-center bg-gray-50 cursor-pointer overflow-hidden transition-colors relative group">
+                {iconPreview ? (
+                  <>
+                    <img decoding="async" loading="lazy" src={iconPreview} alt="Preview Icon" className="w-full h-full object-contain p-2" />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center"><span className="text-white text-sm font-medium">Ubah Icon</span></div>
+                  </>
+                ) : (
+                  <div className="text-center text-gray-500"><UploadCloud className="w-8 h-8 mx-auto mb-2"/><p className="text-sm">Klik untuk mengunggah icon</p></div>
+                )}
+                <input type="file" ref={iconInputRef} onChange={handleIconChange} accept="image/*" className="hidden" />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-1">Foto / Hasil Scan Dokumen (Opsional)</label>
+              <div onClick={() => fileInputRef.current?.click()} className="w-full h-40 border-2 border-dashed border-gray-300 hover:border-yen-accent rounded-xl flex items-center justify-center bg-gray-50 cursor-pointer overflow-hidden transition-colors relative group">
+                {imagePreview ? (
+                  <>
+                    <img decoding="async" loading="lazy" src={imagePreview} alt="Preview" className="w-full h-full object-contain p-2" />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center"><span className="text-white text-sm font-medium">Ubah Dokumen</span></div>
+                  </>
+                ) : (
+                  <div className="text-center text-gray-500"><UploadCloud className="w-8 h-8 mx-auto mb-2"/><p className="text-sm">Klik untuk mengunggah dokumen</p></div>
+                )}
+                <input type="file" ref={fileInputRef} onChange={handleImageChange} accept="image/*" className="hidden" />
+              </div>
             </div>
           </div>
 

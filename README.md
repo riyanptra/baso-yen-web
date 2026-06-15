@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://ui-avatars.com/api/?name=Baso+Yen&background=E31E24&color=fff&size=150&rounded=true" alt="Baso Yen Logo" />
+  <img src="./LOGO-YEN.png" alt="Baso Yen Logo" />
   
   <h1>🍜 Baso Yen - Content Management System & Landing Page</h1>
 
@@ -21,9 +21,11 @@
 <br />
 
 ## 📋 Tentang Proyek
-Proyek ini dibangun untuk mendigitalisasi dan memodernisasi manajemen konten website **Baso Yen**, sebuah produsen bakso, sosis sapi, dan mie premium asal Bandung yang telah berdiri sejak 1988. 
+
+Proyek ini dibangun untuk mendigitalisasi dan memodernisasi manajemen konten website **Baso Yen**, sebuah produsen bakso, sosis sapi, dan mie premium asal Bandung yang telah berdiri sejak 1988.
 
 Aplikasi ini memiliki 2 pilar utama:
+
 1. **Landing Page (Publik):** Halaman depan interaktif untuk pengunjung melihat katalog produk, membaca artikel, menemukan resep, dan mengajukan permintaan sampel B2B.
 2. **Dasbor CMS (Privat):** Panel kontrol khusus admin untuk mengelola semua konten website secara dinamis (CRUD Produk, Artikel, Galeri, Sertifikat, dll).
 
@@ -32,18 +34,20 @@ Aplikasi ini memiliki 2 pilar utama:
 ## ✨ Fitur Utama
 
 ### 🛍️ Landing Page
+
 - **Katalog Dinamis:** Menampilkan produk, artikel, dan resep terbaru dari database.
 - **Formulir Interaktif:** Pengunjung dapat mengirim pesan langsung (Contact Us) & mengajukan sampel produk (B2B).
 - **Galeri & Sertifikat:** Etalase foto perusahaan, fasilitas pabrik, dan bukti sertifikasi mutu (BPOM, Halal).
 - **Desain Responsif:** Tampilan sempurna di Desktop maupun Mobile (didukung oleh animasi dari Framer Motion).
 
 ### ⚙️ Dasbor Admin (CMS)
+
 - **Autentikasi Aman:** Sistem Login menggunakan JWT (JSON Web Token) dengan HttpOnly Cookies.
 - **Manajemen Konten (CRUD):** Kelola Kategori, Produk, Resep, Artikel, Galeri, Mitra, Testimoni, dan Sertifikat.
 - **Manajemen Pesan:** Membaca, membalas, dan mengubah status pesan/pengajuan sampel dari pengunjung.
-- **Upload Gambar Cloud:** Integrasi mulus dengan *Cloudflare R2* dan *Sharp* untuk kompresi dan penyimpanan gambar ultra cepat.
+- **Upload Gambar Cloud:** Integrasi mulus dengan _Cloudflare R2_ dan _Sharp_ untuk kompresi dan penyimpanan gambar ultra cepat.
 - **Rich Text Editor:** Menggunakan `React Quill` untuk penulisan konten artikel dan resep bergaya blog.
-- **Keamanan Lapis Baja:** Dilengkapi *Global Interceptor* Axios untuk auto-logout, validasi input menggunakan Zod, serta pencegahan serangan DDoS (Rate Limiting) dan XSS (Helmet).
+- **Keamanan Lapis Baja:** Dilengkapi _Global Interceptor_ Axios untuk auto-logout, validasi input menggunakan Zod, serta pencegahan serangan DDoS (Rate Limiting) dan XSS (Helmet).
 
 <br />
 
@@ -51,8 +55,8 @@ Aplikasi ini memiliki 2 pilar utama:
 
 > **Catatan:** Ganti teks dan tautan gambar di bawah ini dengan screenshot aplikasi Anda nanti setelah diunggah!
 
-| Landing Page (Beranda) | Dasbor Admin (Overview) |
-| :---: | :---: |
+|                                                       Landing Page (Beranda)                                                       |                                                      Dasbor Admin (Overview)                                                       |
+| :--------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: |
 | <img src="https://placehold.co/600x400/EEE/31343C?font=montserrat&text=Screenshot+Landing+Page" alt="Landing Page" width="100%" /> | <img src="https://placehold.co/600x400/EEE/31343C?font=montserrat&text=Screenshot+Dasbor+Admin" alt="Dasbor Admin" width="100%" /> |
 
 <br />
@@ -60,13 +64,15 @@ Aplikasi ini memiliki 2 pilar utama:
 ## 🛠️ Teknologi yang Digunakan (Tech Stack)
 
 ### Backend
+
 - **Framework:** Node.js, Express.js (ES Modules)
 - **Database & ORM:** PostgreSQL, Prisma Client
 - **Security & Auth:** Bcrypt, JSON Web Token (JWT), Cookie Parser, Helmet, CORS, Express Rate Limit
 - **File & Media:** Multer, Sharp, AWS S3 Client (Cloudflare R2)
-- **Utilities:** Nodemailer (Gmail SMTP), Zod (Validasi)
+- **Utilities:** Zod (Validasi)
 
 ### Frontend
+
 - **Framework:** React 19 (via Vite)
 - **Styling & UI:** TailwindCSS v4, Lucide React (Icons)
 - **Animasi:** Framer Motion
@@ -78,15 +84,18 @@ Aplikasi ini memiliki 2 pilar utama:
 ## 🚀 Cara Menjalankan di Komputer Lokal
 
 ### Prasyarat
+
 Pastikan komputer Anda sudah terinstal **Node.js (v18+)**, **NPM**, dan **PostgreSQL**. Anda juga membutuhkan akun **Cloudflare** (untuk layanan R2).
 
 ### 1. Kloning Repositori
+
 ```bash
 git clone https://github.com/username-anda/basoyen-cms.git
 cd basoyen-cms
 ```
 
 ### 2. Setup Backend
+
 ```bash
 # Masuk ke folder backend
 cd backend
@@ -105,6 +114,7 @@ npm run dev
 ```
 
 ### 3. Setup Frontend
+
 ```bash
 # Buka terminal baru, masuk ke folder frontend
 cd frontend
@@ -125,7 +135,7 @@ npm run dev
 
 Aplikasi ini membutuhkan beberapa kunci rahasia agar bisa berjalan. File `.env` tidak disertakan di repositori ini. Silakan buat file `.env` di folder `backend/` dengan panduan berikut:
 
-```env
+````env
 # Koneksi Database PostgreSQL
 DATABASE_URL="postgresql://user:password@localhost:5432/namadb?schema=public"
 
@@ -142,19 +152,18 @@ R2_ENDPOINT="https://<ACCOUNT_ID>.r2.cloudflarestorage.com"
 R2_ACCESS_KEY_ID="kunci_akses_anda"
 R2_SECRET_ACCESS_KEY="kunci_rahasia_anda"
 
-# Gmail SMTP (Untuk Email Notifikasi Admin)
-GMAIL_PASS="app_password_google_anda"
-```
 
 Untuk `frontend/.env`, cukup tambahkan:
 ```env
 VITE_API_URL=http://localhost:5000/api
-```
+````
 
 <br />
 
 ## 📚 Dokumentasi Lebih Lanjut
-Untuk panduan arsitektur mendalam, struktur tabel database, dan rujukan lengkap (*Endpoint Reference*) semua API, silakan merujuk pada file `DOKUMENTASI_PROYEK.txt` yang dilampirkan di repositori ini.
+
+Untuk panduan arsitektur mendalam, struktur tabel database, dan rujukan lengkap (_Endpoint Reference_) semua API, silakan merujuk pada file `DOKUMENTASI_PROYEK.txt` yang dilampirkan di repositori ini.
 
 ---
+
 Dibuat dengan ❤️ oleh **Riyan** | 2026

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axiosInstance from "../../../lib/axios";
+import { useGalleries } from "../../../hooks/api/useGalleries";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionLabel from "../../ui/SectionLabel";
 import ScrollReveal from "../../ui/ScrollReveal";
@@ -7,34 +7,18 @@ import ScrollReveal from "../../ui/ScrollReveal";
 export default function FasilitasMediaSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
-  const [carouselImages, setCarouselImages] = useState([]);
+  const { data: galleries, isLoading } = useGalleries();
 
-  useEffect(() => {
-    const fetchGallery = async () => {
-      try {
-        const response = await axiosInstance.get("/galleries");
-        if (response.data && response.data.data) {
-          const fasilitas = response.data.data.filter((g) => g.type === "FASILITAS_TENTANG_KAMI");
-          if (fasilitas.length > 0) {
-            const mapped = fasilitas.map(g => ({
-              src: g.image,
-              title: g.title,
-              desc: g.description || "Dokumentasi Fasilitas Baso Yen"
-            }));
-            setCarouselImages(mapped);
-            setCurrentSlide(0);
-          }
-        }
-      } catch (error) {
-        console.error("Gagal mengambil galeri:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchGallery();
-  }, []);
+  const carouselImages = galleries
+    ? galleries
+        .filter((g) => g.type === "FASILITAS_TENTANG_KAMI")
+        .map((g) => ({
+          src: g.image,
+          title: g.title,
+          desc: g.caption || "Dokumentasi Fasilitas Baso Yen",
+        }))
+    : [];
 
   const nextSlide = () => {
     if (carouselImages.length === 0) return;

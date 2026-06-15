@@ -73,60 +73,98 @@ export default function LayananSection() {
     }
   ];
 
-  const b2bFeatures = [
-    {
-      title: "Hotel Berbintang & Catering Resmi",
-      desc: "Suplai rutin bahan baku premium dengan kapasitas produksi tinggi berlisensi resmi.",
-      bgColor: "bg-yen-accent",
-      icon: (
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5" />
-        </svg>
-      )
-    },
-    {
-      title: "Restoran & Jaringan Kedai Bakso",
-      desc: "Konsistensi tekstur kenyal dan rasa gurih konstan untuk menjamin kepuasan pelanggan.",
-      bgColor: "bg-yen-gold",
-      icon: (
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v7a4 4 0 004 4h4a4 4 0 004-4V4M9 19l3 3 3-3M12 15v4" />
-        </svg>
-      )
-    },
-    {
-      title: "Café, Coffee Shop & Foodcourt",
-      desc: "Varian sosis gourmet dan pelengkap menu Western/Asian kekinian usaha kafe Anda.",
-      bgColor: "bg-[#24201E]",
-      icon: (
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z" />
-        </svg>
-      )
-    },
-    {
-      title: "Kemitraan Reseller Baso Yen",
-      desc: "Peluang bisnis distribusi frozen food dengan margin menarik dan support materi pemasaran.",
-      bgColor: "bg-blue-600",
-      icon: (
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-      )
-    },
-    {
-      title: "Custom Order & Makloon Khusus Usaha",
-      desc: "Pembuatan formula mie atau bakso khusus berlisensi untuk keunikan brand resto Anda.",
-      bgColor: "bg-emerald-600",
-      icon: (
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-      )
-    }
-  ];
+ const b2bFeatures = [
+   {
+     title: "Harga Kompetitif",
+     desc: "Harga yang ditawarkan untuk pemilik usaha kompetitif dan pasti menguntungkan sebanding dengan kualitas produk dan layanan.",
+     bgColor: "bg-yen-accent",
+     icon: (
+       <svg
+         className="w-4 h-4"
+         fill="none"
+         stroke="currentColor"
+         viewBox="0 0 24 24"
+         xmlns="http://www.w3.org/2000/svg"
+       >
+         <path
+           strokeLinecap="round"
+           strokeLinejoin="round"
+           strokeWidth={2}
+           d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"
+         />
+       </svg>
+     ),
+   },
+   {
+     title: "Produk Beragam",
+     desc: "Menyuplai produk untuk usaha kuliner Anda. Setidaknya ada 50 produk yang bisa dipilih sesuai dengan kebutuhan Anda",
+     bgColor: "bg-yen-gold",
+     icon: (
+       <svg
+         className="w-4 h-4"
+         fill="none"
+         stroke="currentColor"
+         viewBox="0 0 24 24"
+         xmlns="http://www.w3.org/2000/svg"
+       >
+         <path
+           strokeLinecap="round"
+           strokeLinejoin="round"
+           strokeWidth={2}
+           d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4"
+         />
+         <path
+           strokeLinecap="round"
+           strokeLinejoin="round"
+           strokeWidth={2}
+           d="M4 4v7a4 4 0 004 4h4a4 4 0 004-4V4M9 19l3 3 3-3M12 15v4"
+         />
+       </svg>
+     ),
+   },
+   {
+     title: "Custom Order",
+     desc: "Melayani konsultasi custom orderan dengan minimal jumlah tertentu untuk bakso, mie basah, sosis dan kulit pangsit.",
+     bgColor: "bg-[#24201E]",
+     icon: (
+       <svg
+         className="w-4 h-4"
+         fill="none"
+         stroke="currentColor"
+         viewBox="0 0 24 24"
+         xmlns="http://www.w3.org/2000/svg"
+       >
+         <path
+           strokeLinecap="round"
+           strokeLinejoin="round"
+           strokeWidth={2}
+           d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z"
+         />
+       </svg>
+     ),
+   },
+   {
+     title: "Pengiriman Gratis",
+     desc: "Khusus area Kota Bandung, konsumen bisa mendapatkan gratis ongkir dengan melakukan minimal pembelian tertentu.",
+     bgColor: "bg-blue-600",
+     icon: (
+       <svg
+         className="w-4 h-4"
+         fill="none"
+         stroke="currentColor"
+         viewBox="0 0 24 24"
+         xmlns="http://www.w3.org/2000/svg"
+       >
+         <path
+           strokeLinecap="round"
+           strokeLinejoin="round"
+           strokeWidth={2}
+           d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
+         />
+       </svg>
+     ),
+   },
+ ];
 
   return (
     <section className="bg-yen-white text-yen-dark py-24 relative overflow-hidden border-t-2 border-yen-white bg-grid-pattern">
@@ -139,7 +177,7 @@ export default function LayananSection() {
             <h2 className="font-bebas text-4xl sm:text-6xl font-bold text-yen-dark mt-2">
               Layanan Kami
             </h2>
-            <p className="font-jakarta text-sm text-yen-neutral mt-4 max-w-2xl mx-auto leading-relaxed text-center">
+            <p className="font-jakarta text-md text-yen-neutral mt-4 max-w-2xl mx-auto leading-relaxed text-center">
               Baso Yen hadir melayani kebutuhan kuliner baik untuk rumah tangga
               (B2C) maupun kemitraan bisnis kuliner (B2B). Kami berkomitmen
               menyediakan layanan prima, distribusi andal, serta jaminan produk
@@ -238,9 +276,11 @@ export default function LayananSection() {
                         Loading B2C...
                       </span>
                       <img
-                        src="/b2c_meatball.png"
+                        src="/foto-layanan/b2c.jpg"
                         alt="Baso Yen Retail B2C"
-                        className="w-full h-full object-cover group-hover/img:scale-108 transition-transform duration-500 relative z-10"
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover group-hover/img:scale-108 transition-transform duration-500 relative z-10 will-change-transform"
                       />
                     </div>
                   </div>
@@ -257,9 +297,11 @@ export default function LayananSection() {
                         Loading B2B...
                       </span>
                       <img
-                        src="/b2b_supply.png"
+                        src="/foto-layanan/b2b.jpg"
                         alt="Baso Yen Horeka B2B"
-                        className="w-full h-full object-cover group-hover/img:scale-108 transition-transform duration-500 relative z-10"
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover group-hover/img:scale-108 transition-transform duration-500 relative z-10 will-change-transform"
                       />
                     </div>
                   </div>

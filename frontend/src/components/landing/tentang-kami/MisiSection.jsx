@@ -4,9 +4,9 @@ export default function MisiSection() {
   return (
     <section className="bg-yen-dark text-yen-white py-28 relative overflow-hidden grain-overlay bg-polka-pattern border-t border-yen-accent/15">
       {/* Soft glow blobs in corners & center */}
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-yen-accent/20 rounded-full blur-[140px] -translate-x-1/3 -translate-y-1/3 pointer-events-none z-0" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-yen-gold/20 rounded-full blur-[140px] translate-x-1/3 translate-y-1/3 pointer-events-none z-0" />
-      <div className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-yen-gold/5 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0" />
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(227,30,36,0.2)_0%,transparent_60%)] -translate-x-1/3 -translate-y-1/3 pointer-events-none z-0" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(255,136,0,0.2)_0%,transparent_60%)] translate-x-1/3 translate-y-1/3 pointer-events-none z-0" />
+      <div className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-[radial-gradient(circle,rgba(255,136,0,0.05)_0%,transparent_60%)] -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0" />
 
       {/* Editorial Outline Typography */}
       <div className="absolute top-[8%] left-[5%] font-playfair italic text-6xl sm:text-8xl lg:text-9xl text-white opacity-[0.015] select-none pointer-events-none font-bold z-0">

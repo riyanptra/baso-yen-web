@@ -55,15 +55,61 @@ export default function LayananB2C() {
               segar maupun siap saji langsung dari pabrik.
             </p>
             <ul className="space-y-4 text-xs font-jakarta text-yen-neutral">
-              <li>
-                <p className="font-bold text-yen-dark">Yen Factory BKR</p>
-                <p>Komp. Puri BKR Kav 61 Regol, Bandung</p>
+              <li className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="font-bold text-yen-dark">Outlet Baso Yen BKR</p>
+                  <p>Komp. Puri BKR Kav 61 Regol, Bandung</p>
+                </div>
+                <a
+                  href="https://maps.app.goo.gl/xdKSLkw7K58UL5Vt9"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#3B82F6] hover:text-[#2563EB] flex items-center justify-center bg-[#3B82F6]/10 hover:bg-[#3B82F6]/20 p-2 rounded-lg transition-colors shrink-0 mt-1"
+                  title="Buka Peta"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="w-4 h-4 shrink-0"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                </a>
               </li>
-              <li>
-                <p className="font-bold text-yen-dark">
-                  Meatball Factory Paskal
-                </p>
-                <p>Jl. Pasirkaliki 106 Cicendo, Bandung</p>
+              <li className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="font-bold text-yen-dark">
+                    Outlet Baso yen Pasir Kaliki
+                  </p>
+                  <p>Jl. Pasirkaliki 106 Cicendo, Bandung</p>
+                </div>
+                <a
+                  href="https://maps.app.goo.gl/sehWb4TFdjzEhqgr6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#3B82F6] hover:text-[#2563EB] flex items-center justify-center bg-[#3B82F6]/10 hover:bg-[#3B82F6]/20 p-2 rounded-lg transition-colors shrink-0 mt-1"
+                  title="Buka Peta"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="w-4 h-4 shrink-0"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                </a>
               </li>
             </ul>
           </div>
@@ -89,7 +135,7 @@ export default function LayananB2C() {
                 </p>
                 <div className="flex gap-3 text-xs font-jakarta font-semibold mt-2 pl-1">
                   <a
-                    href="https://gofood.link/u/yBrmj"
+                    href="https://gofood.co.id/bandung/restaurant/mie-baso-sosis-yen-bkr-f2c1dd60-280e-44e4-907e-d5182b660fac"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-yen-gold hover:underline"
@@ -98,7 +144,7 @@ export default function LayananB2C() {
                   </a>
                   <span className="text-yen-neutral/30">|</span>
                   <a
-                    href="https://gofood.link/u/DAr7"
+                    href="https://gofood.co.id/bandung/restaurant/meatball-factory-by-baso-yen-pasirkaliki-20046216-f86b-44e4-8866-0b20eee99493"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-yen-gold hover:underline"
@@ -108,7 +154,57 @@ export default function LayananB2C() {
                 </div>
               </div>
               <div className="pt-3 border-t border-yen-cream">
-                <p className="font-jakarta font-black text-[10px] tracking-wider text-yen-accent bg-yen-accent/5 border border-yen-accent/20 px-2 py-0.5 rounded-full inline-block">
+                <p className="font-jakarta font-black text-[10px] tracking-wider text-[#00B14F] bg-[#00B14F]/5 border border-[#00B14F]/20 px-2 py-0.5 rounded-full inline-block">
+                  VIA GRABFOOD
+                </p>
+                <div className="flex gap-3 text-xs font-jakarta font-semibold mt-2 pl-1">
+                  <a
+                    href="https://food.grab.com/id/en/restaurant/mie-baso-sosis-yen-fresh-food-bkr-delivery/IDGFSTI00000ppi"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yen-gold hover:underline"
+                  >
+                    GrabFood BKR ↗
+                  </a>
+                  <span className="text-yen-neutral/30">|</span>
+                  <a
+                    href="https://food.grab.com/id/en/restaurant/mie-baso-sosis-yen-fresh-food-pasirkaliki-delivery/IDGFSTI00000obo?sourceID=20240709_165325_D81B40FE60264526AF7D895FD8CF0788_MEXMPS"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yen-gold hover:underline"
+                  >
+                    GrabFood Paskal ↗
+                  </a>
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-yen-cream">
+                <p className="font-jakarta font-black text-[10px] tracking-wider text-[#EE4D2D] bg-[#EE4D2D]/5 border border-[#EE4D2D]/20 px-2 py-0.5 rounded-full inline-block">
+                  VIA SHOPEEFOOD
+                </p>
+                <div className="flex gap-3 text-xs font-jakarta font-semibold mt-2 pl-1">
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yen-gold hover:underline"
+                  >
+                    ShopeeFood BKR ↗
+                  </a>
+                  <span className="text-yen-neutral/30">|</span>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yen-gold hover:underline"
+                  >
+                    ShopeeFood Paskal ↗
+                  </a>
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-yen-cream">
+                <p className="font-jakarta font-black text-[10px] tracking-wider text-[#25D366] bg-[#25D366]/5 border border-[#25D366]/20 px-2 py-0.5 rounded-full inline-block">
                   VIA WHATSAPP OUTLET
                 </p>
                 <div className="flex gap-3 text-xs font-jakarta font-semibold mt-2 pl-1">

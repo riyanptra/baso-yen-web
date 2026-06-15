@@ -269,7 +269,7 @@ export default function ProductManagement() {
                     <td className="px-6 py-4">
                       {product.image ? (
                         <div className="w-16 h-16 rounded-xl overflow-hidden border border-gray-200">
-                          <img
+                          <img decoding="async" loading="lazy" 
                             src={product.image}
                             alt={product.name}
                             className="w-full h-full object-cover"
@@ -431,7 +431,7 @@ export default function ProductManagement() {
               >
                 {imagePreview ? (
                   <>
-                    <img
+                    <img decoding="async" loading="lazy" 
                       src={imagePreview}
                       alt="Preview"
                       className="w-full h-full object-cover"

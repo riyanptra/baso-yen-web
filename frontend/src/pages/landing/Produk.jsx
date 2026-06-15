@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { useProducts } from "../../hooks/api/useProducts";
 import ProdukHero from "../../components/landing/produk/ProdukHero";
 import ProdukGridSection from "../../components/landing/produk/ProdukGridSection";
-import ProdukMarketplaceSection from "../../components/landing/produk/ProdukMarketplaceSection";
 
 export default function Produk() {
   const navigate = useNavigate();
@@ -34,7 +33,6 @@ export default function Produk() {
         setSelectedCategory={setSelectedCategory}
         onSelectProduct={handleSelectProduct}
       />
-      <ProdukMarketplaceSection />
     </motion.div>
   );
 }

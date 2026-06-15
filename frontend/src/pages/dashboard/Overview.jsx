@@ -10,7 +10,6 @@ import {
   MessageSquareQuote,
   TrendingUp,
   Clock,
-  Inbox,
 } from "lucide-react";
 
 /**
@@ -73,13 +72,6 @@ export default function Overview() {
       icon: MessageSquareQuote,
       color: "bg-purple-500",
       path: "/admin/testimonials",
-    },
-    {
-      title: "Pesan Masuk",
-      icon: Inbox,
-      color: "bg-rose-500",
-      path: "/admin/messages",
-      badge: unreadCount,
     },
   ];
 

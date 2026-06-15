@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useCertificates } from "../../../hooks/api/useCertificates";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionLabel from "../../ui/SectionLabel";
 import ScrollReveal from "../../ui/ScrollReveal";
 import { certificates as dummyCertificates } from "../../../data/certificates";
-import axiosInstance from "../../../lib/axios";
 
 import logoHalal from "../../../assets/logo-sertifikasi/Logo_Halal.png";
 import logoBPOM from "../../../assets/logo-sertifikasi/Logo_Badan_POM.png";
@@ -46,9 +46,9 @@ const SertifikatCard = ({ cert, handleCopy, copiedId, setSelectedCert }) => (
       <div className="flex gap-4 items-start mt-5 mb-4">
         {/* Circle Icon Container */}
         <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 bg-white border border-yen-cream p-1.5 overflow-hidden shadow-xs">
-          {cert.image ? (
-            <img
-              src={cert.image}
+          {cert.icon ? (
+            <img decoding="async" loading="lazy" 
+              src={cert.icon}
               alt={cert.title}
               className="w-full h-full object-contain rounded-xl"
             />
@@ -209,39 +209,9 @@ export default function SertifikatMutuSection() {
   const [copiedId, setCopiedId] = useState(null);
   const [selectedCert, setSelectedCert] = useState(null);
   const [activeCategory, setActiveCategory] = useState("SEMUA");
-  const [certificates, setCertificates] = useState(dummyCertificates);
+  const { data: fetchedCertificates } = useCertificates();
 
-  useEffect(() => {
-    const fetchCertificates = async () => {
-      try {
-        const response = await axiosInstance.get("/certificates");
-        if (response.data && response.data.data && response.data.data.length > 0) {
-          const mappedCerts = response.data.data.map((cert) => {
-            const authLower = (cert.authority || "").toLowerCase();
-            const type = authLower.includes("bpom") ? "BPOM" 
-                       : (authLower.includes("halal") || authLower.includes("mui")) ? "HALAL" 
-                       : authLower.includes("dinkes") ? "SANITASI" 
-                       : authLower.includes("haccp") ? "HACCP"
-                       : "UMUM";
-            return {
-              id: cert.id,
-              type: type,
-              title: cert.name,
-              issuer: cert.authority,
-              scope: cert.scope,
-              code: cert.registrationNumber,
-              image: cert.image,
-              link: cert.link
-            };
-          });
-          setCertificates(mappedCerts);
-        }
-      } catch (error) {
-        console.error("Gagal mengambil sertifikat:", error);
-      }
-    };
-    fetchCertificates();
-  }, []);
+  const certificates = fetchedCertificates?.length > 0 ? fetchedCertificates : dummyCertificates;
 
   const handleCopy = (code) => {
     navigator.clipboard.writeText(code);

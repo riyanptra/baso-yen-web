@@ -46,7 +46,7 @@ export default function HeroSection() {
             variants={heroTextItem}
             className="font-jakarta text-xs sm:text-sm tracking-[0.25em] font-extrabold text-yen-white uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
           >
-            BAKSO • MIE BASAH • SOSIS SAPI PREMIUM KHAS BANDUNG
+            PRODUSEN MIE,SOSIS DAN BAKSO PREMIUM
           </motion.p>
 
           {/* Premium Main Heading (Solid White, Bubbly Fredoka Font, Drop Shadow) */}
@@ -55,15 +55,17 @@ export default function HeroSection() {
             className="font-bebas text-5xl sm:text-7xl md:text-[84px] text-yen-white leading-[0.95] tracking-tight uppercase drop-shadow-[0_4px_16px_rgba(0,0,0,0.55)] text-center"
           >
             SAJIAN PRAKTIS, <br />
-            ISTIMEWA SELALU
+            ISTIMEWA
           </motion.h1>
 
           {/* Helper Badge / Tagline */}
           <motion.p
             variants={heroTextItem}
-            className="font-jakarta text-[11px] sm:text-xs tracking-[0.2em] font-bold text-yen-white/95 uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] max-w-xl"
+            className="font-jakarta text-[11px] sm:text-sm tracking-widest font-medium text-yen-white/95 max-w-2xl leading-relaxed will-change-transform"
+            style={{ textShadow: "0 2px 4px rgba(0,0,0,0.5)" }}
           >
-            100% Halal, Higienis, & Tanpa Pengawet Buatan
+            Telah dipercaya sebagai pemasok di restoran, hotel, cafe, dan
+            foodcourt
           </motion.p>
 
           {/* Premium CTA Buttons */}
@@ -90,14 +92,6 @@ export default function HeroSection() {
               </motion.button>
             </Link>
           </motion.div>
-
-          {/* Mini Helper Text below buttons */}
-          <motion.p
-            variants={heroTextItem}
-            className="font-jakarta text-[10px] sm:text-[11px] tracking-wider text-yen-white/80 uppercase font-semibold mt-2 drop-shadow-sm"
-          >
-            Percayakan kepada kami
-          </motion.p>
         </motion.div>
       </div>
 
@@ -105,22 +99,26 @@ export default function HeroSection() {
       <div className="absolute bottom-0 left-0 w-full bg-yen-dark border-t border-b border-white/10 py-3.5 overflow-hidden whitespace-nowrap select-none z-20 flex">
         <div className="animate-marquee whitespace-nowrap font-bebas text-yen-white text-xs sm:text-sm tracking-[0.22em] uppercase flex shrink-0">
           <span className="px-4">
-            SAJIAN PRAKTIS ISTIMEWA SELALU • BASO YEN BANDUNG • 100% HALAL &
-            PREMIUM • FOOD THAT FITS YOU
+            • MASAK PRAKTIS SELEZAT DI RESTO • 100% BAHAN PILIHAN BERKUALITAS
+            PRIMA • PRODUKSI HIGIENIS & MODERN • PADUAN KUALITAS & LAYANAN
+            SEMPURNA • RESEP ANDALAN KELUARGA SEJAK 1988 •
           </span>
           <span className="px-4">
-            SAJIAN PRAKTIS ISTIMEWA SELALU • BASO YEN BANDUNG • 100% HALAL &
-            PREMIUM • FOOD THAT FITS YOU
+            • MASAK PRAKTIS SELEZAT DI RESTO • 100% BAHAN PILIHAN BERKUALITAS
+            PRIMA • PRODUKSI HIGIENIS & MODERN • PADUAN KUALITAS & LAYANAN
+            SEMPURNA • RESEP ANDALAN KELUARGA SEJAK 1988 •
           </span>
         </div>
         <div className="animate-marquee whitespace-nowrap font-bebas text-yen-white text-xs sm:text-sm tracking-[0.22em] uppercase flex shrink-0">
           <span className="px-4">
-            SAJIAN PRAKTIS ISTIMEWA SELALU • BASO YEN BANDUNG • 100% HALAL &
-            PREMIUM • FOOD THAT FITS YOU
+            • MASAK PRAKTIS SELEZAT DI RESTO • 100% BAHAN PILIHAN BERKUALITAS
+            PRIMA • PRODUKSI HIGIENIS & MODERN • PADUAN KUALITAS & LAYANAN
+            SEMPURNA • RESEP ANDALAN KELUARGA SEJAK 1988 •
           </span>
           <span className="px-4">
-            SAJIAN PRAKTIS ISTIMEWA SELALU • BASO YEN BANDUNG • 100% HALAL &
-            PREMIUM • FOOD THAT FITS YOU
+            • MASAK PRAKTIS SELEZAT DI RESTO • 100% BAHAN PILIHAN BERKUALITAS
+            PRIMA • PRODUKSI HIGIENIS & MODERN • PADUAN KUALITAS & LAYANAN
+            SEMPURNA • RESEP ANDALAN KELUARGA SEJAK 1988 •RI •
           </span>
         </div>
       </div>

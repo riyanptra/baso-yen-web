@@ -11,7 +11,6 @@ import {
   FileText,
   MessageSquareQuote,
   Images,
-  Inbox,
   LogOut,
   Menu,
   X,
@@ -24,7 +23,6 @@ import {
 // Menu navigasi Dasbor
 const MENU_ITEMS = [
   { path: "/admin", icon: LayoutDashboard, label: "Overview" },
-  { path: "/admin/messages", icon: Inbox, label: "Pesan Masuk" },
   { path: "/admin/categories", icon: Tags, label: "Kategori" },
   { path: "/admin/products", icon: PackageSearch, label: "Produk" },
   { path: "/admin/recipes", icon: ChefHat, label: "Resep" },

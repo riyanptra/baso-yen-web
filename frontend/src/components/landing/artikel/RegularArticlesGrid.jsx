@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import ScrollReveal from "../../ui/ScrollReveal";
+import Button from "../../ui/Button";
 
 function ArticleImage({ src, alt, category }) {
   const [hasError, setHasError] = useState(false);
@@ -117,25 +118,14 @@ const ArticleCard = ({ article, onSelectArticle, idx }) => (
 
     {/* Footer Row */}
     <div className="pt-5 border-t border-yen-cream/60 mt-5 flex items-center justify-between relative z-10">
-      <button
+      <Button
+        variant="accent"
+        size="sm"
         onClick={() => onSelectArticle(article)}
-        className="group/btn flex items-center gap-1.5 text-yen-dark hover:text-yen-accent font-bebas text-xs tracking-widest transition-colors duration-300 cursor-pointer"
+        className="rounded-full font-bebas text-xs tracking-wider"
       >
         Selengkapnya
-        <svg
-          className="w-3.5 h-3.5 transform group-hover/btn:translate-x-1.5 transition-transform duration-300 text-yen-accent"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M14 5l7 7m0 0l-7 7m7-7H3"
-          />
-        </svg>
-      </button>
+      </Button>
 
       <span className="font-bebas text-[9px] tracking-wider text-yen-neutral/40">
         BASO YEN

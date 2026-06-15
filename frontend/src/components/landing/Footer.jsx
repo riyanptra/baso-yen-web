@@ -1,12 +1,10 @@
-import { Link } from "react-router-dom";
-
-export default function Footer() {
+const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
     {
       name: "Instagram",
-      url: "https://instagram.com/miebasoyen",
+      url: "https://www.instagram.com/basoyen/",
       icon: (
         <svg
           className="w-5 h-5"
@@ -20,7 +18,7 @@ export default function Footer() {
     },
     {
       name: "TikTok",
-      url: "https://tiktok.com/@miebasoyen",
+      url: "https://www.tiktok.com/@miebasoyen",
       icon: (
         <svg
           className="w-4 h-4"
@@ -33,22 +31,8 @@ export default function Footer() {
       ),
     },
     {
-      name: "Facebook",
-      url: "https://facebook.com/miebasoyen",
-      icon: (
-        <svg
-          className="w-5 h-5"
-          fill="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-        </svg>
-      ),
-    },
-    {
       name: "YouTube",
-      url: "https://youtube.com",
+      url: "https://www.youtube.com/channel/UCQLcnQA2X6I8kZGCGzVN5Fg",
       icon: (
         <svg
           className="w-5 h-5"
@@ -63,92 +47,55 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-[#12100F] text-yen-cream relative overflow-hidden grain-overlay border-t-4 border-yen-accent">
-      {/* Decorative Scallop Top Edge (Double line) */}
+    <footer
+      id="contact"
+      className="bg-[#12100F] text-yen-cream relative overflow-hidden grain-overlay border-t-4 border-yen-accent"
+    >
       <div className="absolute top-0 left-0 right-0 h-2 bg-yen-gold opacity-80" />
 
-      {/* Background Huge Watermark */}
-      <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 font-bebas text-[100px] sm:text-[160px] md:text-[220px] font-black text-white/2 tracking-widest select-none pointer-events-none whitespace-nowrap z-0">
+      <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 font-bebas text-[100px] sm:text-[160px] md:text-[220px] font-black text-white/2 tracking-widest select-none pointer-events-none whitespace-nowrap z-0.5">
         SAJIAN PRAKTIS ISTIMEWA
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 pt-20 pb-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 md:text-12 pt-20 pb-8 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-12 items-start mb-16">
-          {/* Kolom 1 (lg:col-span-3): Brand Sticker Badge */}
-          <div className="sm:col-span-2 lg:col-span-3 flex flex-col items-start">
-            <Link to="/" className="group mb-6">
-              <div className="bg-yen-accent text-white p-6 rounded-[28px] border-2 border-white shadow-[0_8px_25px_rgba(227,30,36,0.3)]  transition-transform duration-300 flex flex-col items-center text-center">
-                <img
+          {/* Kolom 1 (lg:col-span-4): Brand Sticker Badge */}
+          <div className="sm:col-span-2 lg:col-span-4 flex flex-col items-start">
+            <a href="/" className="group mb-6">
+              <div className="bg-yen-accent text-white p-6 rounded-[28px] border-2 border-white shadow-[0_8px_25px_rgba(227,30,36,0.3)] transition-transform duration-300 flex flex-col items-center text-center">
+                <img decoding="async" loading="lazy" 
                   src="/LOGO-YEN.png"
-                  alt="Baso Yen Logo"
+                  alt=""
                   className="h-20 w-auto object-contain -mt-2 -mb-1 filter drop-shadow-sm"
                 />
                 <span className="font-jakarta text-[9px] uppercase tracking-widest text-yen-cream block mt-2 font-black">
                   ESTD. 1988 · BANDUNG
                 </span>
                 <p className="font-jakarta text-[11px] text-yen-cream/90 mt-3 leading-relaxed max-w-[240px]">
+                  {" "}
                   Pionir produsen mie basah bebas pengawet, bakso premium, dan
                   sosis sapi berkualitas tinggi di Kota Kembang.
                 </p>
               </div>
-            </Link>
+            </a>
             <p className="font-jakarta text-xs text-yen-cream/60 leading-relaxed max-w-xs">
+              {" "}
               Dipercaya oleh puluhan katering ternama, hotel berbintang, dan
               jutaan keluarga Indonesia untuk sajian praktis istimewa setiap
               hari.
             </p>
           </div>
 
-          {/* Kolom 2 (lg:col-span-2): Layanan Kami */}
+          {/* kolom 2 toko online*/}
           <div className="lg:col-span-2">
-            <h4 className="font-bebas text-lg tracking-wider text-yen-accent mb-6 uppercase border-b border-yen-accent/25 pb-2">
-              Layanan Kami
+            <h4 className="font-bebas text-lg tracking-wider text-yen-gold mb-6 uppercase border-b border-yen-gold/35 pb-2">
+              MarketPlace
             </h4>
             <ul className="space-y-3 font-jakarta text-xs text-yen-cream/75">
-              <li>
-                <Link
-                  to="/layanan"
-                  className="hover:text-yen-gold transition-colors flex items-center gap-1.5"
-                >
-                  <span className="text-yen-gold">▪</span> B2C Retail Order
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/layanan"
-                  className="hover:text-yen-gold transition-colors flex items-center gap-1.5"
-                >
-                  <span className="text-yen-gold">▪</span> B2B Supply Horeka
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/produk"
-                  className="hover:text-yen-gold transition-colors flex items-center gap-1.5"
-                >
-                  <span className="text-yen-gold">▪</span> Katalog Produk
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/tentang-kami"
-                  className="hover:text-yen-gold transition-colors flex items-center gap-1.5"
-                >
-                  <span className="text-yen-gold">▪</span> Kemitraan Reseller
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Kolom 3 (lg:col-span-2): Toko Online */}
-          <div className="lg:col-span-2">
-            <h4 className="font-bebas text-lg tracking-wider text-yen-gold mb-6 uppercase border-b border-yen-gold/25 pb-2">
-              Marketplace
-            </h4>
-            <ul className="space-y-3 font-jakarta text-xs text-yen-cream/75">
+              {/* shopee */}
               <li>
                 <a
-                  href="https://www.tokopedia.com"
+                  href="https://shopee.co.id/miebasososisyen"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-yen-gold transition-colors flex items-center gap-2 group"
@@ -168,9 +115,10 @@ export default function Footer() {
                   <span>Tokopedia Official</span>
                 </a>
               </li>
+              {/* tokopedia */}
               <li>
                 <a
-                  href="https://shopee.co.id"
+                  href="https://shopee.co.id/miebasososisyen"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-yen-gold transition-colors flex items-center gap-2 group"
@@ -192,9 +140,10 @@ export default function Footer() {
                   <span>Shopee Mall</span>
                 </a>
               </li>
+              {/* grabfood */}
               <li>
                 <a
-                  href="https://instagram.com/miebasoyen"
+                  href="https://food.grab.com/id/en/restaurant/mie-baso-sosis-yen-fresh-food-bkr-delivery/IDGFSTI00000ppi"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-yen-gold transition-colors flex items-center gap-2 group"
@@ -203,25 +152,147 @@ export default function Footer() {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    strokeWidth="2"
+                    strokeWidth="2.2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="w-5 h-5 stroke-[#E1306C] transition-transform duration-300 group-hover:scale-110 shrink-0"
+                    className="w-5 h-5 stroke-[#00B14F] transition-transform duration-300 group-hover:scale-110 shrink-0"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                    <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+                    <path d="M7 2v20" />
+                    <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
                   </svg>
-                  <span>Instagram Update</span>
+                  <span>GrabFood Toko BKR</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://food.grab.com/id/en/restaurant/mie-baso-sosis-yen-fresh-food-pasirkaliki-delivery/IDGFSTI00000obo?sourceID=20240709_165325_D81B40FE60264526AF7D895FD8CF0788_MEXMPS"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-yen-gold transition-colors flex items-center gap-2 group"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="w-5 h-5 stroke-[#00B14F] transition-transform duration-300 group-hover:scale-110 shrink-0"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+                    <path d="M7 2v20" />
+                    <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+                  </svg>
+                  <span>GrabFood Toko Pasir Kaliki</span>
+                </a>
+              </li>
+              {/* gofood */}
+              <li>
+                <a
+                  href="https://gofood.co.id/bandung/restaurant/mie-baso-sosis-yen-bkr-f2c1dd60-280e-44e4-907e-d5182b660fac"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-yen-gold transition-colors flex items-center gap-2 group"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="w-5 h-5 stroke-[#EE2737] transition-transform duration-300 group-hover:scale-110 shrink-0"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+                    <path d="M7 2v20" />
+                    <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+                  </svg>
+                  <span>GoFood Toko BKR</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://gofood.co.id/bandung/restaurant/meatball-factory-by-baso-yen-pasirkaliki-20046216-f86b-44e4-8866-0b20eee99493"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-yen-gold transition-colors flex items-center gap-2 group"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="w-5 h-5 stroke-[#EE2737] transition-transform duration-300 group-hover:scale-110 shrink-0"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+                    <path d="M7 2v20" />
+                    <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+                  </svg>
+                  <span>GoFood Toko Pasir Kaliki</span>
+                </a>
+              </li>
+              {/* shopeefood */}
+              <li>
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-yen-gold transition-colors flex items-center gap-2 group"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="w-5 h-5 stroke-[#EE4D2D] transition-transform duration-300 group-hover:scale-110 shrink-0"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+                    <path d="M7 2v20" />
+                    <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+                  </svg>
+                  <span>ShopeeFood Toko BKR</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-yen-gold transition-colors flex items-center gap-2 group"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="w-5 h-5 stroke-[#EE4D2D] transition-transform duration-300 group-hover:scale-110 shrink-0"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+                    <path d="M7 2v20" />
+                    <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+                  </svg>
+                  <span>ShopeeFood Toko Pasir Kaliki</span>
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Kolom 4 (lg:col-span-2): Ikuti Kami / Sosial Media */}
+          {/* kolom 3 sosial media */}
           <div className="lg:col-span-2">
-            <h4 className="font-bebas text-lg tracking-wider text-yen-accent mb-6 uppercase border-b border-yen-accent/25 pb-2">
+            <h4 className="font-bebas text-lg tracking-wider text-yen-accent mb-6 uppercase border-b border-yen-accent/35 pb-2">
               Ikuti Kami
             </h4>
             <div className="flex flex-wrap gap-2.5">
@@ -240,19 +311,20 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Kolom 5 (lg:col-span-3): Outlet Cards */}
-          <div className="lg:col-span-3">
-            <h4 className="font-bebas text-lg tracking-wider text-yen-accent mb-6 uppercase border-b border-yen-accent/25 pb-2">
+          {/* kolom 4 outlet card */}
+          <div className="lg:col-span-4">
+            <h4 className="font-bebas text-lg tracking-wider text-yen-accent mb-6 uppercase border-b border-yen-accent/35 pb-2">
               Factory & Outlet
             </h4>
             <div className="space-y-4">
-              {/* Outlet BKR */}
+              {/* oulet BKR */}
               <div className="bg-yen-white text-yen-dark p-4 rounded-[20px] border-2 border-yen-cream shadow-md space-y-1.5 hover:-translate-y-1 transition-all duration-300">
                 <div className="flex items-center justify-between">
                   <span className="font-bebas text-[10px] tracking-wider bg-yen-accent text-white px-2.5 py-0.5 rounded-full">
-                    FACTORY BKR (PUSAT)
+                    OUTLET BKR
                   </span>
                   <span className="font-jakarta text-[10px] font-bold text-yen-neutral">
+                    {" "}
                     📍 Regol
                   </span>
                 </div>
@@ -264,17 +336,23 @@ export default function Footer() {
                     🕒 07.00 - 17.00 WIB
                   </span>
                   <a
-                    href="https://wa.me/628972078800"
+                    href="https://maps.app.goo.gl/nDMSxMc6e5jGukVD8"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-bebas text-xs text-[#25D366] hover:text-[#1ebe57] flex items-center gap-1.5 bg-[#25D366]/10 hover:bg-[#25D366]/20 px-2.5 py-1 rounded-lg transition-colors"
+                    className="font-bebas text-xs text-[#3B82F6] hover:text-[#2563EB] flex items-center gap-1.5 bg-[#3B82F6]/10 hover:bg-[#3B82F6]/20 px-2.5 py-1 rounded-lg transition-colors"
                   >
                     <svg
                       viewBox="0 0 24 24"
-                      className="w-3 h-3 fill-[#25D366] shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-3.5 h-3.5 shrink-0"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.003 5.324 5.328 0 11.859 0c3.166.001 6.141 1.233 8.377 3.469 2.235 2.237 3.465 5.212 3.464 8.379-.003 6.535-5.328 11.859-11.859 11.859-2.004-.001-3.972-.51-5.713-1.479L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.725 1.45 5.277 0 9.584-4.302 9.586-9.582.001-2.553-1-4.954-2.817-6.772C16.326 2.43 13.932 1.432 11.86 1.432c-5.281 0-9.593 4.303-9.596 9.585-.001 1.62.43 3.199 1.248 4.61l-.974 3.559 3.633-.953c1.472.802 2.91 1.206 4.417 1.206zM17.07 14.12c-.284-.143-1.687-.832-1.947-.927-.26-.096-.45-.143-.639.143-.19.284-.733.927-.899 1.117-.166.19-.332.213-.616.071-.284-.143-1.202-.443-2.289-1.411-.847-.756-1.42-1.689-1.586-1.973-.166-.284-.018-.437.125-.578.128-.127.284-.332.427-.497.143-.166.19-.284.284-.473.095-.19.047-.355-.024-.497-.071-.143-.639-1.538-.876-2.107-.23-.554-.464-.479-.639-.488-.166-.008-.356-.01-.546-.01s-.498.071-.758.355c-.26.284-1 .976-1 2.378s1.02 2.75 1.162 2.94c.143.19 2.007 3.066 4.863 4.302.679.294 1.21.469 1.623.6a3.91 3.91 0 0 0 1.784.112c.59-.088 1.687-.689 1.924-1.355.237-.666.237-1.238.166-1.355-.07-.118-.26-.188-.545-.331z" />
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                      <circle cx="12" cy="10" r="3" />
                     </svg>
                   </a>
                 </div>
@@ -283,7 +361,7 @@ export default function Footer() {
               {/* Outlet Paskal */}
               <div className="bg-yen-white text-yen-dark p-4 rounded-[20px] border-2 border-yen-cream shadow-md space-y-1.5 hover:-translate-y-1 transition-all duration-300">
                 <div className="flex items-center justify-between">
-                  <span className="font-bebas text-[10px] tracking-wider bg-yen-gold text-white px-2.5 py-0.5 rounded-full">
+                  <span className="font-bebas text-[10px] tracking-wider bg-yen-accent text-white px-2.5 py-0.5 rounded-full">
                     OUTLET PASKAL
                   </span>
                   <span className="font-jakarta text-[10px] font-bold text-yen-neutral">
@@ -296,19 +374,25 @@ export default function Footer() {
                 <div className="flex items-center justify-between border-t border-yen-cream pt-2 mt-2">
                   <span className="font-jakarta text-[10px] text-yen-neutral font-semibold">
                     🕒 08.00 - 20.00 WIB
-                  </span>
+                  </span>{" "}
                   <a
-                    href="https://wa.me/6285100805080"
+                    href="https://maps.app.goo.gl/Z8wVFbYgvnSYwhBk8"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-bebas text-xs text-[#25D366] hover:text-[#1ebe57] flex items-center gap-1.5 bg-[#25D366]/10 hover:bg-[#25D366]/20 px-2.5 py-1 rounded-lg transition-colors"
+                    className="font-bebas text-xs text-[#3B82F6] hover:text-[#2563EB] flex items-center gap-1.5 bg-[#3B82F6]/10 hover:bg-[#3B82F6]/20 px-2.5 py-1 rounded-lg transition-colors"
                   >
                     <svg
                       viewBox="0 0 24 24"
-                      className="w-3 h-3 fill-[#25D366] shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-3.5 h-3.5 shrink-0"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.003 5.324 5.328 0 11.859 0c3.166.001 6.141 1.233 8.377 3.469 2.235 2.237 3.465 5.212 3.464 8.379-.003 6.535-5.328 11.859-11.859 11.859-2.004-.001-3.972-.51-5.713-1.479L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.725 1.45 5.277 0 9.584-4.302 9.586-9.582.001-2.553-1-4.954-2.817-6.772C16.326 2.43 13.932 1.432 11.86 1.432c-5.281 0-9.593 4.303-9.596 9.585-.001 1.62.43 3.199 1.248 4.61l-.974 3.559 3.633-.953c1.472.802 2.91 1.206 4.417 1.206zM17.07 14.12c-.284-.143-1.687-.832-1.947-.927-.26-.096-.45-.143-.639.143-.19.284-.733.927-.899 1.117-.166.19-.332.213-.616.071-.284-.143-1.202-.443-2.289-1.411-.847-.756-1.42-1.689-1.586-1.973-.166-.284-.018-.437.125-.578.128-.127.284-.332.427-.497.143-.166.19-.284.284-.473.095-.19.047-.355-.024-.497-.071-.143-.639-1.538-.876-2.107-.23-.554-.464-.479-.639-.488-.166-.008-.356-.01-.546-.01s-.498.071-.758.355c-.26.284-1 .976-1 2.378s1.02 2.75 1.162 2.94c.143.19 2.007 3.066 4.863 4.302.679.294 1.21.469 1.623.6a3.91 3.91 0 0 0 1.784.112c.59-.088 1.687-.689 1.924-1.355.237-.666.237-1.238.166-1.355-.07-.118-.26-.188-.545-.331z" />
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                      <circle cx="12" cy="10" r="3" />
                     </svg>
                   </a>
                 </div>
@@ -322,18 +406,15 @@ export default function Footer() {
           <p>© {currentYear} basoyen.com. All rights reserved.</p>
 
           <div className="flex gap-6 font-jakarta text-xs">
-            <Link
-              to="/tentang-kami"
-              className="hover:text-yen-gold transition-colors"
-            >
+            <a href="#about" className="hover:text-yen-gold transition-colors">
               Tentang Kami
-            </Link>
-            <Link
-              to="/kontak"
+            </a>
+            <a
+              href="#contact"
               className="hover:text-yen-gold transition-colors"
             >
-              Kontak Kami
-            </Link>
+              Kontak
+            </a>
             <a
               href="#top"
               onClick={(e) => {
@@ -342,11 +423,13 @@ export default function Footer() {
               }}
               className="text-yen-gold hover:underline font-bold"
             >
-              Kembali Ke Atas ↑
+              Kembali ke Atas
             </a>
           </div>
         </div>
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

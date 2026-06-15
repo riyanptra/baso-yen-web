@@ -18,14 +18,14 @@ router.use(protect);
 
 router.post(
   "/",
-  upload.single("image"),
+  upload.fields([{ name: "image", maxCount: 1 }, { name: "icon", maxCount: 1 }]),
   handleUploadError,
   certificateController.createCertificate
 );
 
 router.put(
   "/:id",
-  upload.single("image"),
+  upload.fields([{ name: "image", maxCount: 1 }, { name: "icon", maxCount: 1 }]),
   handleUploadError,
   certificateController.updateCertificate
 );

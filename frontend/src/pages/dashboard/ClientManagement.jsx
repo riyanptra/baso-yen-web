@@ -174,7 +174,7 @@ export default function ClientManagement() {
           {!isLoading && filteredData.map((client) => (
             <div key={client.id} className="group relative bg-white border border-gray-100 rounded-2xl p-4 flex flex-col items-center gap-4 hover:shadow-lg hover:border-gray-200 transition-all">
               <div className="w-24 h-24 rounded-full bg-gray-50 border border-gray-100 overflow-hidden flex items-center justify-center p-2">
-                <img src={client.image} alt={client.name} className="w-full h-full object-contain" />
+                <img decoding="async" loading="lazy" src={client.image} alt={client.name} className="w-full h-full object-contain" />
               </div>
               <p className="font-bold text-gray-800 text-center text-sm">{client.name}</p>
               
@@ -211,7 +211,7 @@ export default function ClientManagement() {
             <div onClick={() => fileInputRef.current?.click()} className="w-full h-32 border-2 border-dashed border-gray-300 hover:border-yen-accent rounded-xl flex items-center justify-center bg-gray-50 cursor-pointer overflow-hidden transition-colors relative group">
               {imagePreview ? (
                 <>
-                  <img src={imagePreview} alt="Preview" className="w-full h-full object-contain p-2" />
+                  <img decoding="async" loading="lazy" src={imagePreview} alt="Preview" className="w-full h-full object-contain p-2" />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center"><span className="text-white text-sm font-medium">Ubah Logo</span></div>
                 </>
               ) : (

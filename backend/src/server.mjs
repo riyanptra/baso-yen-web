@@ -11,11 +11,9 @@ import categoryRoute from "./routes/categoryRoute.mjs";
 import productRoute from "./routes/productRoute.mjs";
 import recipeRoute from "./routes/recipeRoute.mjs";
 import articleRoute from "./routes/articleRoute.mjs";
-import messageRoute from "./routes/messageRoute.mjs";
 import galleryRoute from "./routes/galleryRoute.mjs";
 import clientRoute from "./routes/clientRoute.mjs";
 import certificateRoute from "./routes/certificateRoute.mjs";
-import settingRoute from "./routes/settingRoute.mjs";
 import testimonialRoute from "./routes/testimonialRoute.mjs";
 import dashboardRoute from "./routes/dashboardRoute.mjs";
 
@@ -50,11 +48,9 @@ app.use("/api/categories", categoryRoute);
 app.use("/api/products", productRoute);
 app.use("/api/recipes", recipeRoute);
 app.use("/api/articles", articleRoute);
-app.use("/api/messages", messageRoute);
 app.use("/api/galleries", galleryRoute);
 app.use("/api/clients", clientRoute);
 app.use("/api/certificates", certificateRoute);
-app.use("/api/settings", settingRoute);
 app.use("/api/testimonials", testimonialRoute);
 app.use("/api/dashboard", dashboardRoute);
 

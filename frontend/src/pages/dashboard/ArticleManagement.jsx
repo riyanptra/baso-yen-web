@@ -291,7 +291,7 @@ export default function ArticleManagement() {
                     <td className="px-6 py-4">
                       {article.image ? (
                         <div className="w-20 h-14 rounded-lg overflow-hidden border border-gray-200">
-                          <img
+                          <img decoding="async" loading="lazy" 
                             src={article.image}
                             alt="Thumb"
                             className="w-full h-full object-cover"
@@ -427,7 +427,7 @@ export default function ArticleManagement() {
                 >
                   {imagePreview ? (
                     <>
-                      <img
+                      <img decoding="async" loading="lazy" 
                         src={imagePreview}
                         alt="Preview"
                         className="w-full h-full object-cover"

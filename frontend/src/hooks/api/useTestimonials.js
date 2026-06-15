@@ -18,6 +18,7 @@ export const useTestimonials = () => {
         role: t.role || "Pelanggan Setia",
         content: t.content,
         rating: t.rating || 5,
+        tag: t.tag,
         avatar: t.image || t.avatar // avatar jika ada
       }));
     }

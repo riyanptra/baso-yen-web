@@ -8,7 +8,7 @@ function ProductImage({ src, alt, category }) {
   const getIcon = (cat) => {
     if (!cat) return "🏺";
     const lower = cat.toLowerCase();
-    if (lower.includes("bakso")) return "🍲";
+    if (lower.includes("bakso") || lower.includes("baso")) return "🍲";
     if (lower.includes("mie")) return "🍜";
     if (lower.includes("sosis")) return "🌭";
     if (lower.includes("pangsit")) return "🥟";
@@ -19,7 +19,7 @@ function ProductImage({ src, alt, category }) {
     const getGradient = (cat) => {
       if (!cat) return "from-[#FAF9F6] to-[#EFECE6] text-[#4A4543]";
       const lower = cat.toLowerCase();
-      if (lower.includes("bakso")) return "from-[#FFEDE3] to-[#FFD8C6] text-[#E31E24]";
+      if (lower.includes("bakso") || lower.includes("baso")) return "from-[#FFEDE3] to-[#FFD8C6] text-[#E31E24]";
       if (lower.includes("mie")) return "from-[#FFF5E6] to-[#FFE2B7] text-[#FF8800]";
       if (lower.includes("sosis")) return "from-[#FFEBEC] to-[#FFCCD1] text-[#E31E24]";
       if (lower.includes("pangsit")) return "from-[#FFF9E6] to-[#FFF0C2] text-[#FFB000]";
@@ -152,10 +152,11 @@ export default function ProdukGridSection({
           const catStr = (p.category || "").toLowerCase();
           const filterStr = selectedCategory.toLowerCase();
           
+          if (filterStr === "bakso") return catStr.includes("bakso") || catStr.includes("baso");
           if (filterStr === "mie basah") return catStr.includes("mie");
           if (filterStr === "sosis sapi") return catStr.includes("sosis");
           if (filterStr === "kulit pangsit") return catStr.includes("pangsit") || catStr.includes("kulit");
-          if (filterStr === "lainnya") return !["bakso", "mie", "sosis", "pangsit", "kulit"].some(k => catStr.includes(k));
+          if (filterStr === "lainnya") return !["bakso", "baso", "mie", "sosis", "pangsit", "kulit"].some(k => catStr.includes(k));
           
           return catStr.includes(filterStr);
         });

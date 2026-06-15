@@ -220,7 +220,7 @@ export default function TestimonialManagement() {
                 <tr key={item.id} className="hover:bg-gray-50/50 transition-colors">
                   <td className="px-6 py-4">
                     {item.avatar ? (
-                      <img src={item.avatar} alt="Avatar" className="w-12 h-12 rounded-full object-cover border border-gray-200" />
+                      <img decoding="async" loading="lazy" src={item.avatar} alt="Avatar" className="w-12 h-12 rounded-full object-cover border border-gray-200" />
                     ) : (
                       <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center border border-gray-200 text-xl font-bold text-gray-400">
                         {item.name.charAt(0).toUpperCase()}
@@ -301,7 +301,7 @@ export default function TestimonialManagement() {
             <div onClick={() => fileInputRef.current?.click()} className="w-full h-24 border-2 border-dashed border-gray-300 hover:border-yen-accent rounded-xl flex items-center justify-center bg-gray-50 cursor-pointer overflow-hidden transition-colors relative group">
               {imagePreview ? (
                 <>
-                  <img src={imagePreview} alt="Preview" className="w-full h-full object-contain bg-white" />
+                  <img decoding="async" loading="lazy" src={imagePreview} alt="Preview" className="w-full h-full object-contain bg-white" />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center"><span className="text-white text-xs font-medium">Ubah</span></div>
                 </>
               ) : (

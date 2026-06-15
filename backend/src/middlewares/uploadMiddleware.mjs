@@ -11,7 +11,7 @@ if (!fs.existsSync(tempDir)) {
 /**
  * Konfigurasi penyimpanan memori (buffer) untuk Multer.
  * File yang diunggah tidak disimpan di disk server, melainkan di memori (RAM)
- * agar bisa langsung diteruskan/diunggah ke layanan Cloudinary.
+ * agar bisa langsung diteruskan/diunggah ke layanan R2
  */
 const storage = multer.memoryStorage();
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ScrollReveal from "../../ui/ScrollReveal";
+import Button from "../../ui/Button";
 
 function ArticleImage({ src, alt, category }) {
   const [hasError, setHasError] = useState(false);
@@ -100,21 +101,14 @@ export default function FeaturedArticle({ article, onSelectArticle }) {
           </div>
 
           <div className="pt-6 border-t border-yen-cream/60 mt-8 flex items-center justify-between relative z-10">
-            <button
+            <Button
+              variant="accent"
+              size="sm"
               onClick={() => onSelectArticle(article)}
-              className="group/btn flex items-center gap-2 text-yen-dark hover:text-yen-accent font-bebas text-sm tracking-widest transition-colors duration-300 cursor-pointer"
+              className="rounded-full font-bebas text-xs tracking-wider"
             >
               Baca Selengkapnya
-              <svg
-                className="w-4 h-4 transform group-hover/btn:translate-x-1.5 transition-transform duration-300 text-yen-accent"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </button>
+            </Button>
 
             <span className="font-bebas text-[10px] tracking-wider text-yen-neutral/40">
               EST. 1988

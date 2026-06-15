@@ -64,7 +64,7 @@ export default function Login() {
               Dasbor ini adalah pusat kendali Anda. Tambahkan produk baru, pantau pesan pelanggan, dan kelola artikel edukasi dalam satu tempat yang aman dan cepat.
             </p>
             <div className="flex items-center gap-4">
-              <img src="/LOGO-YEN.png" alt="Logo Baso Yen" className="w-12 h-12 object-contain opacity-80" />
+              <img decoding="async" loading="lazy" src="/LOGO-YEN.png" alt="Logo Baso Yen" className="w-12 h-12 object-contain opacity-80" />
               <div className="h-8 w-px bg-white/20" />
               <span className="font-bebas text-white/50 tracking-widest text-sm">Sajian Praktis Istimewa</span>
             </div>
@@ -85,7 +85,7 @@ export default function Login() {
         >
           {/* Logo untuk versi Mobile (Muncul saat layar kecil) */}
           <div className="flex justify-center mb-8 lg:hidden">
-            <img src="/LOGO-YEN.png" alt="Logo Baso Yen" className="w-20 h-20 object-contain drop-shadow-sm" />
+            <img decoding="async" loading="lazy" src="/LOGO-YEN.png" alt="Logo Baso Yen" className="w-20 h-20 object-contain drop-shadow-sm" />
           </div>
 
           <div className="mb-10 text-center lg:text-left">

@@ -8,7 +8,7 @@ function RecipeImage({ src, alt, category }) {
   const getIcon = (cat) => {
     if (!cat) return "🍳";
     const lower = cat.toLowerCase();
-    if (lower.includes("bakso")) return "🍲";
+    if (lower.includes("bakso") || lower.includes("baso")) return "🍲";
     if (lower.includes("mie")) return "🍜";
     if (lower.includes("sosis")) return "🌭";
     return "🥟";
@@ -18,7 +18,7 @@ function RecipeImage({ src, alt, category }) {
     const getGradient = (cat) => {
       if (!cat) return "from-[#FAF9F6] to-[#EFECE6] text-[#4A4543]";
       const lower = cat.toLowerCase();
-      if (lower.includes("bakso")) return "from-[#FFEDE3] to-[#FFD8C6] text-[#E31E24]";
+      if (lower.includes("bakso") || lower.includes("baso")) return "from-[#FFEDE3] to-[#FFD8C6] text-[#E31E24]";
       if (lower.includes("mie")) return "from-[#FFF5E6] to-[#FFE2B7] text-[#FF8800]";
       if (lower.includes("sosis")) return "from-[#FFEBEC] to-[#FFCCD1] text-[#E31E24]";
       return "from-[#FFF9E6] to-[#FFF0C2] text-[#FFB000]";
@@ -72,7 +72,7 @@ const RecipeCard = ({ recipe, onSelectRecipe }) => (
         <span className="absolute bottom-3.5 left-3.5 bg-yen-dark/85 backdrop-blur-xs text-white font-jakarta font-black text-[9px] tracking-widest px-3 py-1 rounded-full uppercase shadow-md z-10 select-none">
           {(() => {
              const c = (recipe.category || "").toLowerCase();
-             if (c.includes("bakso")) return "Olahan Bakso";
+             if (c.includes("bakso") || c.includes("baso")) return "Olahan Bakso";
              if (c.includes("mie")) return "Olahan Mie";
              if (c.includes("sosis")) return "Olahan Sosis";
              return recipe.category;
@@ -136,10 +136,10 @@ export default function ResepGridSection({
           const catStr = (r.category || "").toLowerCase();
           const filterStr = selectedCategory.toLowerCase();
           
-          if (filterStr === "bakso") return catStr.includes("bakso");
+          if (filterStr === "bakso") return catStr.includes("bakso") || catStr.includes("baso");
           if (filterStr === "mie") return catStr.includes("mie");
           if (filterStr === "sosis") return catStr.includes("sosis");
-          if (filterStr === "lainnya") return !["bakso", "mie", "sosis"].some(k => catStr.includes(k));
+          if (filterStr === "lainnya") return !["bakso", "baso", "mie", "sosis"].some(k => catStr.includes(k));
           
           return catStr.includes(filterStr);
         });

@@ -60,11 +60,11 @@ export const getCertificateById = async (req, res, next) => {
  */
 export const createCertificate = async (req, res, next) => {
   try {
-    // 1. Ambil file gambar sertifikat
-    const file = req.file;
+    // 1. Ambil file gambar dan icon sertifikat
+    const files = req.files || {};
     
     // 2. Lempar ke service untuk divalidasi dan diunggah ke Cloudinary
-    const certificate = await certificateService.createCertificate(req.body, file);
+    const certificate = await certificateService.createCertificate(req.body, files);
     
     // 3. Beri respons berhasil (HTTP 201)
     return sendSuccess(res, "Berhasil membuat sertifikat baru", certificate, 201);
@@ -87,10 +87,10 @@ export const updateCertificate = async (req, res, next) => {
   try {
     // 1. Ambil ID yang mau diupdate
     const { id } = req.params;
-    const file = req.file; // File baru jika ada
+    const files = req.files || {}; // File baru jika ada
     
     // 2. Lakukan proses update
-    const updatedCertificate = await certificateService.updateCertificate(id, req.body, file);
+    const updatedCertificate = await certificateService.updateCertificate(id, req.body, files);
     
     // 3. Kirim konfirmasi berhasil
     return sendSuccess(res, "Berhasil memperbarui data sertifikat", updatedCertificate);

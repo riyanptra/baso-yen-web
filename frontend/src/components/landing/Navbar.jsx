@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { whatsappConfig } from "../../data/whatsappMessage";
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -135,12 +137,21 @@ export default function Navbar() {
           {/* Right Action Button & Mobile Burger */}
           <div className="flex items-center gap-4">
             {/* CTA Button (Order Now style) */}
-            <Link
-              to="/kontak"
-              className="hidden lg:inline-flex bg-yen-accent hover:bg-yen-dark text-white font-jakarta font-extrabold text-[11px] tracking-widest uppercase px-5 py-2.5 rounded-full shadow-[0_4px_15px_rgba(227,30,36,0.15)] hover:shadow-[0_6px_20px_rgba(227,30,36,0.3)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 cursor-pointer"
+            <a
+              href={whatsappConfig.generateOrderUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden lg:inline-flex items-center gap-2 bg-yen-accent hover:bg-yen-dark text-white font-jakarta font-extrabold text-[11px] tracking-widest uppercase px-5 py-2.5 rounded-full shadow-[0_4px_15px_rgba(227,30,36,0.15)] hover:shadow-[0_6px_20px_rgba(227,30,36,0.3)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 cursor-pointer"
             >
+              <svg
+                className="w-3.5 h-3.5 fill-white"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.458L0 24zm6.59-4.846c1.666.988 3.396 1.51 5.357 1.51 5.467 0 9.911-4.444 9.914-9.913.002-2.65-1.02-5.14-2.877-6.998C17.18 1.9 14.693.882 12.008.882c-5.474 0-9.915 4.446-9.918 9.916-.002 1.879.49 3.714 1.424 5.334l-.955 3.486 3.578-.938zm11.365-7.135c-.3-.15-1.77-.875-2.04-.972-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.225-.65.075-.302-.15-1.276-.47-2.43-1.502-.897-.8-1.502-1.79-1.678-2.09-.178-.3-.02-.462.13-.61.135-.133.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.67-1.625-.92-2.225-.24-.58-.49-.5-.67-.513-.17-.008-.37-.01-.57-.01-.2 0-.525.075-.8.375-.27.3-1.03 1.01-1.03 2.46s1.07 2.85 1.22 3.05c.15.2 2.11 3.22 5.11 4.517.714.31 1.27.495 1.7.63.717.228 1.368.196 1.884.12.573-.085 1.77-.724 2.02-1.423.25-.7.25-1.3 1.75-1.423.075-.013.15-.025.22-.038z" />
+              </svg>
               Pesan Sekarang
-            </Link>
+            </a>
 
             {/* Mobile Menu Button */}
             <button
@@ -231,13 +242,22 @@ export default function Navbar() {
                     transition={{ delay: navLinks.length * 0.05 }}
                     className="pt-4"
                   >
-                    <Link
-                      to="/kontak"
+                    <a
+                      href="https://wa.me/6281223700010"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       onClick={() => setIsOpen(false)}
-                      className="w-full text-center bg-yen-accent hover:bg-yen-dark text-white font-jakarta font-extrabold text-xs tracking-wider uppercase py-3.5 px-6 rounded-full shadow-md block"
+                      className="w-full bg-yen-accent hover:bg-yen-dark text-white font-jakarta font-extrabold text-xs tracking-wider uppercase py-3.5 px-6 rounded-full shadow-md flex items-center justify-center gap-2"
                     >
+                      <svg
+                        className="w-4 h-4 fill-white"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.458L0 24zm6.59-4.846c1.666.988 3.396 1.51 5.357 1.51 5.467 0 9.911-4.444 9.914-9.913.002-2.65-1.02-5.14-2.877-6.998C17.18 1.9 14.693.882 12.008.882c-5.474 0-9.915 4.446-9.918 9.916-.002 1.879.49 3.714 1.424 5.334l-.955 3.486 3.578-.938zm11.365-7.135c-.3-.15-1.77-.875-2.04-.972-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.225-.65.075-.302-.15-1.276-.47-2.43-1.502-.897-.8-1.502-1.79-1.678-2.09-.178-.3-.02-.462.13-.61.135-.133.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.67-1.625-.92-2.225-.24-.58-.49-.5-.67-.513-.17-.008-.37-.01-.57-.01-.2 0-.525.075-.8.375-.27.3-1.03 1.01-1.03 2.46s1.07 2.85 1.22 3.05c.15.2 2.11 3.22 5.11 4.517.714.31 1.27.495 1.7.63.717.228 1.368.196 1.884.12.573-.085 1.77-.724 2.02-1.423.25-.7.25-1.3 1.75-1.423.075-.013.15-.025.22-.038z" />
+                      </svg>
                       Pesan Sekarang
-                    </Link>
+                    </a>
                   </motion.div>
                 </div>
               </div>

@@ -14,8 +14,8 @@ export default function TentangHero() {
       <div className="absolute inset-0 bg-gradient-to-t from-yen-dark to-transparent z-10" />
 
       {/* Soft glow blobs */}
-      <div className="absolute top-1/2 left-1/4 w-[300px] h-[300px] bg-yen-accent/15 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none z-10" />
-      <div className="absolute top-1/2 right-1/4 w-[300px] h-[300px] bg-yen-gold/15 rounded-full blur-[100px] translate-x-1/2 -translate-y-1/2 pointer-events-none z-10" />
+      <div className="absolute top-1/2 left-1/4 w-[300px] h-[300px] bg-[radial-gradient(circle,rgba(227,30,36,0.15)_0%,transparent_60%)] -translate-x-1/2 -translate-y-1/2 pointer-events-none z-10" />
+      <div className="absolute top-1/2 right-1/4 w-[300px] h-[300px] bg-[radial-gradient(circle,rgba(255,136,0,0.15)_0%,transparent_60%)] translate-x-1/2 -translate-y-1/2 pointer-events-none z-10" />
 
       {/* Large background watermark */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-10 overflow-hidden">

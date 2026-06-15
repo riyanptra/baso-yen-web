@@ -2,26 +2,28 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Button from "../../ui/Button";
 
+import { whatsappConfig } from "../../../data/whatsappMessage";
+
 export default function LayananB2B() {
   const b2bBenefits = [
     {
-      title: "Skema Harga Grosir & Horeka Khusus",
-      desc: "Dapatkan margin bisnis yang sangat menarik dan kompetitif melalui sistem penawaran harga kemitraan partai besar kami.",
+      title: "Harga Kompetitif",
+      desc: "Harga yang ditawarkan untuk pemilik usaha kompetitif dan pasti menguntungkan sebanding dengan kualitas produk dan layanan.",
       icon: "💰",
     },
     {
-      title: "Jasa Maklon & Kustomisasi Resep",
-      desc: "Kembangkan menu eksklusif dengan formula rasa, ketebalan mie, atau diameter bakso yang disesuaikan khusus bisnis Anda.",
+      title: "Costum Order",
+      desc: "Melayani konsultasi custom orderan dengan minimal jumlah tertentu untuk bakso, mie basah, sosis dan kulit pangsit.",
       icon: "⚙️",
     },
     {
-      title: "Konsistensi Kualitas Premium Kontinu",
-      desc: "Pabrik modern bersertifikasi penuh menjamin setiap pengiriman memiliki cita rasa, higienitas, dan tekstur konsisten.",
+      title: "Produk Beragam",
+      desc: "Menyuplai produk untuk usaha kuliner Anda. Setidaknya ada 50 produk yang bisa dipilih sesuai dengan kebutuhan Anda.",
       icon: "🍜",
     },
     {
-      title: "Dukungan Sampel & Promosi Produk",
-      desc: "Kami menyediakan sampel produk gratis untuk uji coba menu baru Anda serta aset promosi digital siap pakai.",
+      title: "Pengiriman Gratis",
+      desc: "Khusus area Kota Bandung, konsumen bisa mendapatkan gratis ongkir dengan melakukan minimal pembelian tertentu.",
       icon: "📈",
     },
   ];
@@ -88,11 +90,11 @@ export default function LayananB2B() {
           harga khusus, sampel produk gratis, dan konsultasi kerjasama jangka
           panjang.
         </p>
-        <Link to="/kontak">
+        <a href={whatsappConfig.generateKemitraanUrl()} target="_blank" rel="noopener noreferrer">
           <Button variant="dark" className="rounded-full px-8 py-3">
             Hubungi Kami untuk Kemitraan
           </Button>
-        </Link>
+        </a>
       </div>
     </motion.div>
   );

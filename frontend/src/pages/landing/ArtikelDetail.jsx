@@ -124,7 +124,7 @@ export default function ArtikelDetail() {
 
             {/* Tombol Bagikan */}
             <SocialShare 
-              url={`https://basoyen.com/article/${slug}`}
+              url={typeof window !== "undefined" ? window.location.href : ""}
               title={article.title}
               text={article.excerpt || "Baca artikel menarik ini dari Baso Yen!"}
             />

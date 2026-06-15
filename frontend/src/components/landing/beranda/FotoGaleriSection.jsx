@@ -1,13 +1,12 @@
-import ScrollReveal from "../../ui/ScrollReveal";
-import SectionLabel from "../../ui/SectionLabel";
+import ScrollReveal from "../../ui/ScrollReveal"
 
-export default function FotoGaleriSection() {
+const FooterGaleriSection = () => {
   return (
-    <section className="bg-yen-dark text-yen-white py-28 relative overflow-hidden grain-overlay bg-grid-pattern border-t border-yen-accent/15">
-      {/* Soft glow blobs in corners & center */}
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-yen-accent/20 rounded-full blur-[140px] -translate-x-1/3 -translate-y-1/3 pointer-events-none z-0" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-yen-gold/20 rounded-full blur-[140px] translate-x-1/3 translate-y-1/3 pointer-events-none z-0" />
-      <div className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-yen-accent/5 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0" />
+    <section className="bg-yen-dark text-yen-white py-12 md:py-28 relative overflow-hidden grain-overlay bg-grid-pattern border-t border-yen-accent/15">
+      {/* Soft glow blobs in corners & center (Optimized for performance: using radial-gradient instead of heavy blur) */}
+      <div className="absolute top-0 left-0 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(227,30,36,0.15)_0%,transparent_60%)] -translate-x-1/3 -translate-y-1/3 pointer-events-none z-0" />
+      <div className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(255,136,0,0.15)_0%,transparent_60%)] translate-x-1/3 translate-y-1/3 pointer-events-none z-0" />
+      <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(227,30,36,0.05)_0%,transparent_60%)] -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0" />
 
       {/* Editorial Outline Typography */}
       <div className="absolute top-[8%] left-[5%] font-playfair italic text-6xl sm:text-8xl lg:text-9xl text-white opacity-[0.015] select-none pointer-events-none font-bold z-0">
@@ -27,8 +26,9 @@ export default function FotoGaleriSection() {
                 {/* Washi tape */}
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-12 h-5 bg-yen-gold/15 border-x border-dashed border-yen-gold/30 rotate-[-2deg] backdrop-blur-[2px] shadow-xs z-10" />
 
-                <img loading="lazy"
-                  src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&auto=format&fit=crop&q=80"
+                <img decoding="async" 
+                  loading="lazy"
+                  src="/foto-galeri/olahan-baso.webp"
                   alt="Bakso Kuah Panas Baso Yen"
                   className="w-full aspect-square object-cover rounded-[2px] border border-black/5"
                 />
@@ -42,13 +42,14 @@ export default function FotoGaleriSection() {
                 {/* Washi tape */}
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-14 h-5 bg-yen-accent/15 border-x border-dashed border-yen-accent/30 rotate-[3deg] backdrop-blur-[2px] shadow-xs z-10" />
 
-                <img loading="lazy"
-                  src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=600&auto=format&fit=crop&q=80"
+                <img decoding="async" 
+                  loading="lazy"
+                  src="/foto-galeri/olahan-mie.webp"
                   alt="Proses Pembuatan Baso Yen"
                   className="w-full aspect-square object-cover rounded-[2px] border border-black/5"
                 />
                 <p className="text-yen-dark font-playfair font-black italic text-[9px] sm:text-[11px] text-center mt-3 tracking-wide opacity-80">
-                  Proses Produksi
+                  Mie ayam
                 </p>
               </div>
 
@@ -57,13 +58,14 @@ export default function FotoGaleriSection() {
                 {/* Washi tape */}
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-12 h-5 bg-yen-gold/15 border-x border-dashed border-yen-gold/30 rotate-[-4deg] backdrop-blur-[2px] shadow-xs z-10" />
 
-                <img loading="lazy"
-                  src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&auto=format&fit=crop&q=80"
+                <img decoding="async" 
+                  loading="lazy"
+                  src="/foto-galeri/olahan-sosis.webp"
                   alt="Bahan Baku Segar Baso Yen"
                   className="w-full aspect-square object-cover rounded-[2px] border border-black/5"
                 />
                 <p className="text-yen-dark font-playfair font-black italic text-[9px] sm:text-[11px] text-center mt-3 tracking-wide opacity-80">
-                  Bahan Segar
+                  Capcay
                 </p>
               </div>
 
@@ -72,13 +74,14 @@ export default function FotoGaleriSection() {
                 {/* Washi tape */}
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-12 h-5 bg-yen-accent/15 border-x border-dashed border-yen-accent/30 rotate-[2deg] backdrop-blur-[2px] shadow-xs z-10" />
 
-                <img loading="lazy"
-                  src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80"
+                <img decoding="async" 
+                  loading="lazy"
+                  src="/foto-galeri/olahan-pangsit.webp"
                   alt="Momen Makan Bersama Baso Yen"
                   className="w-full aspect-square object-cover rounded-[2px] border border-black/5"
                 />
                 <p className="text-yen-dark font-playfair font-black italic text-[9px] sm:text-[11px] text-center mt-3 tracking-wide opacity-80">
-                  Momen Bersama
+                  Dimsum
                 </p>
               </div>
             </div>
@@ -96,8 +99,8 @@ export default function FotoGaleriSection() {
             </h2>
             <p className="font-jakarta text-sm text-yen-cream/70 leading-relaxed mb-8 max-w-sm">
               Dari dapur rumahan hingga meja restoran bintang lima — setiap
-              gigitan Baso Yen menghadirkan kelezatan autentik khas Bandung yang
-              selalu dirindukan.
+              gigitan Baso Yen menghadirkan kelezatan autentik yang selalu
+              dirindukan.
             </p>
 
             {/* Glowing CTA Instagram Button */}
@@ -116,4 +119,6 @@ export default function FotoGaleriSection() {
       </div>
     </section>
   );
-}
+};
+
+export default FooterGaleriSection;

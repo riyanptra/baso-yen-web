@@ -97,7 +97,7 @@ export default function SertifikasiSection() {
                     className="relative z-10 bg-white p-6 border-2 border-yen-cream hover:border-yen-accent/25 rounded-[24px] shadow-[0_12px_32px_rgba(30,27,26,0.10)] hover:shadow-[0_20px_40px_rgba(227,30,36,0.18)] transition-all duration-300 flex flex-col md:flex-row gap-5 items-start group"
                   >
                     <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-white border border-yen-cream p-1 overflow-hidden shadow-xs animate-none">
-                      <img
+                      <img decoding="async" loading="lazy" 
                         src={logoMap[cert.logoKey]}
                         alt={cert.title}
                         className="w-full h-full object-contain"

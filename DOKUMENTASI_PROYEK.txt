@@ -1,4 +1,4 @@
-================================================================================
+   ================================================================================
           DOKUMENTASI PROYEK - SISTEM MANAJEMEN KONTEN (CMS) BASO YEN
 ================================================================================
 Nama Proyek   : Baso Yen - Content Management System (CMS) & Landing Page
@@ -61,7 +61,6 @@ BAB 2. TEKNOLOGI YANG DIGUNAKAN (TECH STACK)
   Upload Gambar  : Multer (buffer) + Sharp (optimasi) + Cloudflare R2 (penyimpanan)
   Validasi Input : Zod v4.4.3
   Keamanan       : Helmet, CORS, express-rate-limit
-  Email          : Nodemailer (via Gmail SMTP)
   Enkripsi       : Bcrypt v6.0.0
   Dev Tools      : Nodemon v3.1.14
 
@@ -95,7 +94,7 @@ basoyen/
 │   │   ├── routes/             <- Definisi jalur URL API
 │   │   ├── middlewares/        <- Middleware autentikasi, error, upload
 │   │   ├── validations/        <- Skema validasi input (Zod)
-│   │   ├── utils/              <- Fungsi pembantu (JWT, email, Cloudflare R2)
+│   │   ├── utils/              <- Fungsi pembantu (JWT, Cloudflare R2)
 │   │   └── lib/
 │   │       └── prisma.mjs      <- Instansiasi Prisma Client
 │   └── .env                    <- Variabel lingkungan rahasia backend
@@ -423,7 +422,8 @@ BAB 7. DOKUMENTASI DATABASE (PRISMA SCHEMA)
      | authority         | String   | Lembaga penerbit sertifikat         |
      | scope             | String   | Ruang lingkup sertifikasi           |
      | registrationNumber| String   | Nomor registrasi resmi              |
-     | image             | String?  | URL gambar sertifikat (opsional)    |
+     | icon              | String?  | URL logo/icon khusus (opsional)     |
+     | image             | String?  | URL scan gambar dokumen (opsional)  |
      | link              | String?  | URL tautan ke sertifikat (opsional) |
      | createdAt         | DateTime | Waktu dibuat                        |
      | updatedAt         | DateTime | Waktu diperbarui                    |
@@ -444,45 +444,6 @@ BAB 7. DOKUMENTASI DATABASE (PRISMA SCHEMA)
      | updatedAt       | DateTime | Waktu diperbarui                      |
      +-----------------+----------+---------------------------------------+
 
-  10. Setting (Pengaturan Aplikasi)
-     +-----------------+----------+---------------------------------------+
-     | Kolom           | Tipe     | Keterangan                            |
-     +-----------------+----------+---------------------------------------+
-     | id              | String   | ID unik (UUID), Primary Key           |
-     | key             | String   | Kunci unik pengaturan                 |
-     | value           | Text     | Nilai pengaturan                      |
-     | createdAt       | DateTime | Waktu dibuat                          |
-     | updatedAt       | DateTime | Waktu diperbarui                      |
-     +-----------------+----------+---------------------------------------+
-
-  11. ServiceMessage (Pesan Kontak dari Pengunjung)
-     +-----------------+----------+---------------------------------------+
-     | Kolom           | Tipe     | Keterangan                            |
-     +-----------------+----------+---------------------------------------+
-     | id              | String   | ID unik (UUID), Primary Key           |
-     | name            | String   | Nama pengirim                         |
-     | email           | String   | Email pengirim                        |
-     | phone           | String   | Nomor telepon pengirim                |
-     | content         | Text     | Isi pesan                             |
-     | status          | Enum     | UNREAD, READ, atau REPLIED            |
-     | createdAt       | DateTime | Waktu pesan dikirim                   |
-     | updatedAt       | DateTime | Waktu terakhir diperbarui             |
-     +-----------------+----------+---------------------------------------+
-
-  12. SampleRequestMessage (Permintaan Sampel Produk B2B)
-     +-----------------+----------+---------------------------------------+
-     | Kolom           | Tipe     | Keterangan                            |
-     +-----------------+----------+---------------------------------------+
-     | id              | String   | ID unik (UUID), Primary Key           |
-     | name            | String   | Nama pemilik/perwakilan usaha         |
-     | businessName    | String   | Nama usaha kuliner                    |
-     | city            | String   | Kota usaha                            |
-     | phone           | String   | Nomor WhatsApp                        |
-     | email           | String   | Email usaha                           |
-     | status          | Enum     | PENDING, REVIEWED, SENT, REJECTED     |
-     | createdAt       | DateTime | Waktu pengajuan                       |
-     | updatedAt       | DateTime | Waktu terakhir diperbarui             |
-     +-----------------+----------+---------------------------------------+
 
   ENUM (Tipe Data Pilihan):
   -------------------------
@@ -671,58 +632,7 @@ BAB 8. DOKUMENTASI API LENGKAP (ENDPOINT REFERENCE)
   -------------------------------------------------------------
 
   ============================================================
-  F. PESAN (/api/messages)
-  ============================================================
-
-  POST /api/messages/contact                          [PUBLIK]
-  Deskripsi : Pengunjung mengirim pesan dari form Contact Us
-  Body      : { "name": "...", "email": "...", "phone": "...", "content": "..." }
-  Efek      : Pesan disimpan ke DB + notifikasi email ke Admin
-  Respons   : Data pesan yang terkirim
-  -------------------------------------------------------------
-
-  POST /api/messages/sample-request                   [PUBLIK]
-  Deskripsi : Pengunjung B2B mengajukan permintaan sampel produk
-  Body      : { "name": "...", "businessName": "...", "city": "...",
-                "phone": "...", "email": "..." }
-  Efek      : Data tersimpan ke DB + notifikasi email ke Admin
-  Respons   : Data pengajuan yang terkirim
-  -------------------------------------------------------------
-
-  GET  /api/messages/contact                          [ADMIN]
-  Deskripsi : Mengambil semua pesan kontak (diurutkan terbaru)
-  Respons   : Array data pesan kontak
-  -------------------------------------------------------------
-
-  PATCH /api/messages/contact/:id/status              [ADMIN]
-  Deskripsi : Memperbarui status pesan kontak
-  Body      : { "status": "READ" }   (UNREAD / READ / REPLIED)
-  Respons   : Data pesan yang diperbarui
-  -------------------------------------------------------------
-
-  DELETE /api/messages/contact/:id                    [ADMIN]
-  Deskripsi : Menghapus pesan kontak
-  Respons   : Pesan sukses
-  -------------------------------------------------------------
-
-  GET  /api/messages/sample-request                   [ADMIN]
-  Deskripsi : Mengambil semua pengajuan sampel
-  Respons   : Array data pengajuan sampel
-  -------------------------------------------------------------
-
-  PATCH /api/messages/sample-request/:id/status       [ADMIN]
-  Deskripsi : Memperbarui status pengajuan sampel
-  Body      : { "status": "REVIEWED" }  (PENDING/REVIEWED/SENT/REJECTED)
-  Respons   : Data pengajuan yang diperbarui
-  -------------------------------------------------------------
-
-  DELETE /api/messages/sample-request/:id             [ADMIN]
-  Deskripsi : Menghapus data pengajuan sampel
-  Respons   : Pesan sukses
-  -------------------------------------------------------------
-
-  ============================================================
-  G. GALERI (/api/galleries)
+  F. GALERI (/api/galleries)
   ============================================================
 
   GET  /api/galleries                                 [PUBLIK]
@@ -754,7 +664,7 @@ BAB 8. DOKUMENTASI API LENGKAP (ENDPOINT REFERENCE)
   -------------------------------------------------------------
 
   ============================================================
-  H. MITRA / KLIEN (/api/clients)
+  G. MITRA / KLIEN (/api/clients)
   ============================================================
 
   GET  /api/clients                                   [PUBLIK]
@@ -786,7 +696,7 @@ BAB 8. DOKUMENTASI API LENGKAP (ENDPOINT REFERENCE)
   -------------------------------------------------------------
 
   ============================================================
-  I. SERTIFIKAT (/api/certificates)
+  H. SERTIFIKAT (/api/certificates)
   ============================================================
 
   GET  /api/certificates                              [PUBLIK]
@@ -818,7 +728,7 @@ BAB 8. DOKUMENTASI API LENGKAP (ENDPOINT REFERENCE)
   -------------------------------------------------------------
 
   ============================================================
-  J. TESTIMONI (/api/testimonials)
+  I. TESTIMONI (/api/testimonials)
   ============================================================
 
   GET  /api/testimonials                              [PUBLIK]
@@ -849,39 +759,9 @@ BAB 8. DOKUMENTASI API LENGKAP (ENDPOINT REFERENCE)
   Respons   : Pesan sukses
   -------------------------------------------------------------
 
-  ============================================================
-  K. PENGATURAN (/api/settings)
-  ============================================================
-
-  GET  /api/settings                                  [PUBLIK]
-  Deskripsi : Mengambil semua pengaturan aplikasi
-  Respons   : Array pasangan key-value pengaturan
-  -------------------------------------------------------------
-
-  GET  /api/settings/:key                             [PUBLIK]
-  Deskripsi : Mengambil nilai pengaturan berdasarkan key
-  Respons   : Object { key, value }
-  -------------------------------------------------------------
-
-  POST /api/settings                                  [ADMIN]
-  Deskripsi : Membuat pengaturan baru
-  Body      : { "key": "...", "value": "..." }
-  Respons   : Data pengaturan baru
-  -------------------------------------------------------------
-
-  PUT  /api/settings/:key                             [ADMIN]
-  Deskripsi : Memperbarui nilai pengaturan
-  Body      : { "value": "..." }
-  Respons   : Data pengaturan yang diperbarui
-  -------------------------------------------------------------
-
-  DELETE /api/settings/:key                           [ADMIN]
-  Deskripsi : Menghapus sebuah pengaturan
-  Respons   : Pesan sukses
-  -------------------------------------------------------------
 
   ============================================================
-  L. DASBOR STATISTIK (/api/dashboard)
+  K. DASBOR STATISTIK (/api/dashboard)
   ============================================================
 
   GET  /api/dashboard/stats                           [ADMIN]
@@ -1009,8 +889,7 @@ BAB 10. HALAMAN LANDING PAGE (PENGUNJUNG)
      - Halaman baca artikel lengkap
 
   10. KONTAK (/kontak)
-      - Informasi kontak perusahaan
-      - Form pesan langsung (mengirim ke /api/messages/contact)
+      - CTA direct ke WhatsApp
 
 
 ================================================================================
@@ -1036,55 +915,45 @@ BAB 11. HALAMAN DASBOR ADMIN (CMS)
      - Shortcut ke fitur utama
      - Badge merah jika ada pesan belum terbaca
 
-  2. PESAN MASUK (/admin/messages)
-     - Tab 1: Pesan Kontak (dari form Contact Us di website)
-       * Lihat nama, email, nomor telepon, isi pesan, dan status
-       * Ubah status: UNREAD -> READ -> REPLIED
-       * Hapus pesan
-     - Tab 2: Request Sampel (pengajuan B2B dari pengunjung)
-       * Lihat nama, usaha, kota, kontak pengaju
-       * Ubah status: PENDING -> REVIEWED -> SENT atau REJECTED
-       * Hapus pengajuan
-
-  3. KATEGORI (/admin/categories)
+  2. KATEGORI (/admin/categories)
      - Membuat kategori baru untuk Produk, Resep, atau Artikel
      - Mengedit nama kategori
      - Menghapus kategori
 
-  4. PRODUK (/admin/products)
+  3. PRODUK (/admin/products)
      - Tabel daftar semua produk
      - Form tambah produk baru (dengan upload gambar)
      - Form edit produk (gambar bisa diganti atau dibiarkan)
      - Hapus produk
 
-  5. ARTIKEL (/admin/articles)
+  4. ARTIKEL (/admin/articles)
      - Tabel daftar semua artikel
      - Form tambah artikel (dengan editor teks kaya/Rich Text Editor)
      - Form edit artikel
      - Hapus artikel
 
-  6. RESEP (/admin/recipes)
+  5. RESEP (/admin/recipes)
      - Tabel daftar semua resep
      - Form tambah resep (dengan field waktu, tingkat kesulitan, dan konten rich text)
      - Form edit resep
      - Hapus resep
 
-  7. TESTIMONI (/admin/testimonials)
+  6. TESTIMONI (/admin/testimonials)
      - Tabel daftar semua testimoni
      - Form tambah testimoni (nama, jabatan, isi, rating bintang, tag, foto profil)
      - Form edit dan hapus testimoni
 
-  8. SERTIFIKAT (/admin/certificates)
+  7. SERTIFIKAT (/admin/certificates)
      - Tabel daftar semua sertifikat mutu
      - Form tambah sertifikat (nama, lembaga, nomor registrasi, gambar, link)
      - Form edit dan hapus sertifikat
 
-  9. MITRA & KLIEN (/admin/clients)
+  8. MITRA & KLIEN (/admin/clients)
      - Tabel daftar semua mitra/klien
      - Form tambah mitra (nama + upload logo)
      - Form edit dan hapus mitra
 
-  10. GALERI (/admin/galleries)
+  9. GALERI (/admin/galleries)
       - Tabel daftar semua foto galeri
       - Form tambah foto (judul, deskripsi, tipe galeri, urutan tampil, upload gambar)
       - Tipe galeri menentukan di halaman mana foto tampil:
@@ -1160,15 +1029,7 @@ BAB 13. LAYANAN EKSTERNAL YANG DIGUNAKAN
      - Cloudflare R2 membalas dengan URL publik gambar
      - URL tersebut disimpan di database PostgreSQL
 
-  2. GMAIL SMTP (Notifikasi Email)
-     Kegunaan  : Mengirim email notifikasi ke admin ketika:
-                 a) Ada pesan baru dari form Contact Us
-                 b) Ada pengajuan sampel produk baru
-     Konfigurasi: Menggunakan Gmail App Password (bukan password utama Gmail)
-     Cara buat : myaccount.google.com -> Security -> 2-Step Verification
-                 -> App Passwords -> Buat password baru
-
-  3. POSTGRESQL (Database)
+  2. POSTGRESQL (Database)
      Kegunaan  : Menyimpan semua data aplikasi (produk, artikel, pengguna, dll)
      ORM       : Prisma digunakan sebagai jembatan antara Node.js dan PostgreSQL
                  sehingga query database bisa ditulis dalam JavaScript.

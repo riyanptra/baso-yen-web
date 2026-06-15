@@ -131,7 +131,7 @@ export default function ResepDetail() {
 
             {/* Tombol Bagikan */}
             <SocialShare 
-              url={`https://basoyen.com/resep/${slug}`}
+              url={typeof window !== "undefined" ? window.location.href : ""}
               title={recipe.name}
               text={`Yuk coba resep ${recipe.name} ini di rumah!`}
             />

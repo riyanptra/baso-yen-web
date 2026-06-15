@@ -1,15 +1,16 @@
-import { Link } from "react-router-dom";
 import ScrollReveal from "../../ui/ScrollReveal";
 import SectionLabel from "../../ui/SectionLabel";
 import Button from "../../ui/Button";
 
+import { whatsappConfig } from "../../../data/whatsappMessage";
+
 // Custom MapPin Component
 function MapPin({ top, left, right, name, type = "outlet" }) {
   const isPusat = type === "pusat";
-  
+
   const positionStyle = {
     top: top,
-    ...(left ? { left: left } : { right: right })
+    ...(left ? { left: left } : { right: right }),
   };
 
   return (
@@ -19,20 +20,23 @@ function MapPin({ top, left, right, name, type = "outlet" }) {
     >
       {/* Pulsing indicator under the pin */}
       <span className="absolute -left-1.5 -bottom-0.5 w-3 h-1.5 bg-black/20 rounded-full blur-[1px] transform scale-x-150 transition-all duration-300 group-hover/pin:scale-x-200 group-hover/pin:opacity-40" />
-      
+
       {isPusat ? (
         <>
           {/* Gold pulsing ring */}
           <span className="absolute -left-3 -bottom-3 w-6 h-6 bg-yen-gold/30 rounded-full animate-ping" />
-          
+
           {/* Custom Star Pin */}
           <div className="relative -translate-x-1/2 -translate-y-full flex flex-col items-center group-hover/pin:-translate-y-[105%] transition-all duration-300 ease-out">
             <div className="bg-yen-gold text-white p-1.5 sm:p-2 rounded-full border-2 border-white shadow-md flex items-center justify-center transition-colors group-hover/pin:bg-yen-accent duration-300">
-              <svg className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 fill-white" viewBox="0 0 24 24">
+              <svg
+                className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 fill-white"
+                viewBox="0 0 24 24"
+              >
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
               </svg>
             </div>
-            
+
             {/* Star Premium Pulse ring */}
             <div className="absolute inset-0 -m-1 rounded-full border border-yen-gold/40 animate-pulse pointer-events-none" />
           </div>
@@ -41,11 +45,15 @@ function MapPin({ top, left, right, name, type = "outlet" }) {
         <>
           {/* Red pulsing ring */}
           <span className="absolute -left-2 -bottom-2 w-4 h-4 bg-yen-accent/30 rounded-full animate-ping" />
-          
+
           {/* Custom Red Pin */}
           <div className="relative -translate-x-1/2 -translate-y-full flex flex-col items-center group-hover/pin:-translate-y-[105%] transition-all duration-300 ease-out">
             <div className="bg-yen-accent text-white p-1.5 sm:p-2 rounded-full border-2 border-white shadow-md flex items-center justify-center transition-colors group-hover/pin:bg-yen-dark duration-300">
-              <svg className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <svg
+                className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 text-white"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
               </svg>
             </div>
@@ -54,10 +62,16 @@ function MapPin({ top, left, right, name, type = "outlet" }) {
       )}
 
       {/* Tooltip */}
-      <div className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 bg-yen-dark/95 backdrop-blur-xs text-white text-[10px] sm:text-[11px] font-jakarta font-semibold tracking-wider px-2.5 py-1 rounded-lg shadow-lg border border-white/10 whitespace-nowrap opacity-0 scale-90 group-hover/pin:opacity-100 group-hover/pin:scale-100 transition-all duration-200 pointer-events-none origin-bottom z-30 flex flex-col items-center gap-0.5 ${
-        isPusat ? 'border-yen-gold/40' : ''
-      }`}>
-        {isPusat && <span className="text-yen-gold font-bebas text-[9px] tracking-widest leading-none">Pusat & Pabrik</span>}
+      <div
+        className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 bg-yen-dark/95 backdrop-blur-xs text-white text-[10px] sm:text-[11px] font-jakarta font-semibold tracking-wider px-2.5 py-1 rounded-lg shadow-lg border border-white/10 whitespace-nowrap opacity-0 scale-90 group-hover/pin:opacity-100 group-hover/pin:scale-100 transition-all duration-200 pointer-events-none origin-bottom z-30 flex flex-col items-center gap-0.5 ${
+          isPusat ? "border-yen-gold/40" : ""
+        }`}
+      >
+        {isPusat && (
+          <span className="text-yen-gold font-bebas text-[9px] tracking-widest leading-none">
+            Pusat & Pabrik
+          </span>
+        )}
         <span className="leading-none">{name}</span>
       </div>
     </div>
@@ -87,8 +101,16 @@ export default function JangkauanSection() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.1}>
-          <Link to="/kontak">
-            <Button variant="primary" size="lg" className="flex items-center gap-3">
+          <a
+            href={whatsappConfig.generatePengirimanUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button
+              variant="primary"
+              size="lg"
+              className="flex items-center gap-3"
+            >
               <svg
                 className="w-4 h-4 text-white"
                 fill="none"
@@ -106,7 +128,7 @@ export default function JangkauanSection() {
               </svg>
               Pesan Pengiriman
             </Button>
-          </Link>
+          </a>
         </ScrollReveal>
 
         <ScrollReveal

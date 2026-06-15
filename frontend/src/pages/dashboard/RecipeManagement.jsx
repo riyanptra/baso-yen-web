@@ -264,7 +264,7 @@ export default function RecipeManagement() {
                   <td className="px-6 py-4">
                     {recipe.image ? (
                       <div className="w-20 h-20 rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
-                        <img src={recipe.image} alt="Thumb" className="w-full h-full object-cover" />
+                        <img decoding="async" loading="lazy" src={recipe.image} alt="Thumb" className="w-full h-full object-cover" />
                       </div>
                     ) : (
                       <div className="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center border border-gray-200">
@@ -406,7 +406,7 @@ export default function RecipeManagement() {
                 >
                   {imagePreview ? (
                     <>
-                      <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
+                      <img decoding="async" loading="lazy" src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <span className="text-white text-sm font-medium">Ganti Foto</span>
                       </div>

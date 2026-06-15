@@ -69,7 +69,7 @@ const KeunggulanCard = ({ adv }) => (
   >
     {/* Card Header Photo */}
     <div className="relative w-full aspect-4/3 overflow-hidden bg-yen-dark/10">
-      <img
+      <img decoding="async" loading="lazy" 
         src={adv.img}
         alt={adv.title}
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
@@ -125,7 +125,7 @@ export default function KeunggulanSection() {
       desc: "Bahan-bahan berkualitas dan terbaik adalah syarat untuk setiap pembuatan produk Yen. Sehingga rasa serta produknya tetap terjaga.",
       color: "bg-yen-accent/90 backdrop-blur-md text-white border-white/20",
       badgeColor: "bg-yen-accent text-white",
-      img: "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=600&auto=format&fit=crop&q=80",
+      img: "/foto-keunggulan/bahan-baku.jpg",
     },
     {
       num: "02",
@@ -134,7 +134,7 @@ export default function KeunggulanSection() {
       desc: "Peduli akan kesehatan konsumen, setiap produk Yen menggunakan standard food grade sehingga lebih sehat dan aman dikonsumsi.",
       color: "bg-emerald-600/90 backdrop-blur-md text-white border-white/20",
       badgeColor: "bg-emerald-500 text-white",
-      img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&auto=format&fit=crop&q=80",
+      img: "/foto-keunggulan/tanpa-pengawet.jpg",
     },
     {
       num: "03",
@@ -143,7 +143,7 @@ export default function KeunggulanSection() {
       desc: "Untuk menjaga kualitas rasa dan demi menghasilkan produk yang sehat, Yen selalu menjual produk yang fresh dan baru.",
       color: "bg-sky-600/90 backdrop-blur-md text-white border-white/20",
       badgeColor: "bg-sky-500 text-white",
-      img: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600&auto=format&fit=crop&q=80",
+      img: "/foto-keunggulan/fresh.png",
     },
     {
       num: "04",
@@ -152,7 +152,7 @@ export default function KeunggulanSection() {
       desc: "Bahan yang dipilih sudah pasti berkualitas dan menggunakan bahan pilihan yang membuat produk memiliki citarasa selezat di resto.",
       color: "bg-amber-600/90 backdrop-blur-md text-white border-white/20",
       badgeColor: "bg-amber-500 text-white",
-      img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&auto=format&fit=crop&q=80",
+      img: "/foto-keunggulan/premium.jpg",
     },
   ];
 
@@ -172,7 +172,7 @@ export default function KeunggulanSection() {
             <h2 className="font-bebas text-4xl sm:text-6xl font-black text-yen-dark mt-3 leading-none uppercase">
               Keistimewaan <span className="text-yen-accent">Produk Kami</span>
             </h2>
-            <p className="font-jakarta text-sm text-yen-neutral mt-4 max-w-lg mx-auto leading-relaxed">
+            <p className="font-jakarta text-md text-yen-neutral mt-4 max-w-lg mx-auto leading-relaxed">
               Diolah dengan resep legendaris untuk menghadirkan kualitas rasa
               makanan terbaik ke meja makan Anda.
             </p>
